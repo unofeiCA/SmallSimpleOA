@@ -8,4 +8,13 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Views\Home\Login.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Login\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\lib\bootstrap\css\.DS_Store" />
+  </ItemGroup>
 </Project>

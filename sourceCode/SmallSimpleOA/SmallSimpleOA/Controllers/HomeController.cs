@@ -10,7 +10,7 @@ namespace SmallSimpleOA.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Home()
         {
             return View();
         }
@@ -19,7 +19,7 @@ namespace SmallSimpleOA.Controllers
         {
             ViewData["Message"] = "Your application description page.";
 
-            return View();
+            return View("Login");
         }
 
         public IActionResult Contact()

@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html class="fill-h fill-w">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,37 +10,38 @@
     <link rel="stylesheet" href="~/css/additionalCss.css" />
 
 </head>
-    <body>
-        <div class="row fixed-top bg-dark h-50px pl-3">
-            <div class="col-12 d-flex align-items-center ">
-                <h2 class="text-white font-weight-bold font-italic">SmallSimpleOA</h2>
+<body class="fill-h fill-w">
+    <div class="row fixed-top bg-dark h-50px pl-3">
+        <div class="col-12 d-flex align-items-center ">
+            <h2 class="text-white font-weight-bold font-italic">SmallSimpleOA</h2>
+        </div>
+    </div>
+
+
+    <div class="container-fluid p-0 fill-h">
+        <div class="row fill-h ">
+
+            <div class="col-2 bg-dark">
+                <nav class="nav flex-column ">
+                    <a class="nav-link active text-white" asp-controller="Home" asp-action="Home">Home</a>
+                    <a class="nav-link text-white" asp-controller="" asp-action="">Attendance</a>
+                    <a class="nav-link text-white" asp-controller="" asp-action="">Ask for Leave</a>
+                    <a class="nav-link disabled text-white" asp-controller="" asp-action="">Add New Staff</a>
+                </nav>
+            </div>
+
+            <div class="col-10">
+                @RenderBody()
             </div>
         </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/Popper/Popper.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 
 
-        <div class="container-fluid p-0">
-            <div class="row">
-
-                <div class="col-2 bg-dark">
-                        <nav class="nav flex-column">
-                            <a class="nav-link active text-white" asp-controller="Home" asp-action="Home">Home</a>
-                            <a class="nav-link text-white" asp-controller="" asp-action="">Attendance</a>
-                            <a class="nav-link text-white" asp-controller="" asp-action="">Ask for Leave</a>
-                            <a class="nav-link disabled text-white" asp-controller="" asp-action="">Add New Staff</a>
-                        </nav>
-                </div>
-
-                <div class="col-10">
-                    @RenderBody()
-                </div>
-            </div>
-        </div>
-
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-
-
-        @RenderSection("Scripts", required: false)
-    </body>
+    @RenderSection("Scripts", required: false)
+</body>
 </html>

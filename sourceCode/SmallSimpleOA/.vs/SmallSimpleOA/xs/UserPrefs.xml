@@ -1,11 +1,14 @@
 ﻿<Properties StartupConfiguration="{DD2ED755-B768-48EE-9C5A-EF0C9C09BED0}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="SmallSimpleOA/wwwroot/lib/Popper/Popper.js">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SmallSimpleOA/Views/AskForLeave/New.cshtml">
     <Files>
       <File FileName="SmallSimpleOA/Controllers/HomeController.cs" Line="8" Column="1" />
-      <File FileName="SmallSimpleOA/Views/Shared/_Layout.cshtml" Line="25" Column="53" />
-      <File FileName="SmallSimpleOA/Views/Home/Home.cshtml" Line="84" Column="15" />
-      <File FileName="SmallSimpleOA/Views/Shared/_CookieConsentPartial.cshtml" Line="12" Column="74" />
+      <File FileName="SmallSimpleOA/Views/Home/Home.cshtml" Line="88" Column="46" />
       <File FileName="SmallSimpleOA/wwwroot/lib/Popper/Popper.js" Line="2540" Column="35" />
+      <File FileName="SmallSimpleOA/Controllers/TodoController.cs" Line="16" Column="1" />
+      <File FileName="SmallSimpleOA/Views/Todo/Detail.cshtml" Line="40" Column="8" />
+      <File FileName="SmallSimpleOA/Views/Todo/New.cshtml" Line="31" Column="17" />
+      <File FileName="SmallSimpleOA/Controllers/AttendanceController.cs" Line="13" Column="26" />
+      <File FileName="SmallSimpleOA/Views/AskForLeave/New.cshtml" Line="56" Column="37" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

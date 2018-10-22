@@ -14,8 +14,52 @@
   <ItemGroup>
     <Folder Include="Views\Login\" />
     <Folder Include="wwwroot\lib\Popper\" />
+    <Folder Include="Views\Todo\" />
+    <Folder Include="Views\Attendance\" />
+    <Folder Include="wwwroot\lib\fullcalendar\" />
+    <Folder Include="wwwroot\lib\fullcalendar\js\" />
+    <Folder Include="wwwroot\lib\fullcalendar\css\" />
+    <Folder Include="Views\AskForLeave\" />
+    <Folder Include="wwwroot\lib\moment\" />
+    <Folder Include="wwwroot\lib\moment\js\" />
+    <Folder Include="wwwroot\lib\tempusdominus\" />
+    <Folder Include="wwwroot\lib\tempusdominus\js\" />
+    <Folder Include="wwwroot\lib\tempusdominus\css\" />
+    <Folder Include="wwwroot\lib\fontawesome\" />
+    <Folder Include="wwwroot\lib\fontawesome\css\" />
+    <Folder Include="wwwroot\lib\fontawesome\fonts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\lib\bootstrap\css\.DS_Store" />
+    <Content Remove="wwwroot\lib\fullcalendar\css\fullcalendar.css" />
+    <Content Remove="wwwroot\lib\fullcalendar\js\fullcalendar.js" />
+    <Content Remove="wwwroot\lib\jquery\dist\jquery-ui.custom.min.js" />
+    <Content Remove="wwwroot\lib\fullcalendar\css\fullcalendar.print.css" />
+    <Content Remove="wwwroot\lib\moment\js\moment.js" />
+    <Content Remove="wwwroot\lib\moment\js\locales.js" />
+    <Content Remove="wwwroot\lib\moment\js\moment-with-locales.js" />
+    <Content Remove="wwwroot\lib\fontawesome\css\font-awesome.css" />
+    <Content Remove="wwwroot\lib\fontawesome\fonts\fontawesome-webfont.eot" />
+    <Content Remove="wwwroot\lib\fontawesome\fonts\fontawesome-webfont.svg" />
+    <Content Remove="wwwroot\lib\fontawesome\fonts\fontawesome-webfont.ttf" />
+    <Content Remove="wwwroot\lib\fontawesome\fonts\fontawesome-webfont.woff" />
+    <Content Remove="wwwroot\lib\fontawesome\fonts\fontawesome-webfont.woff2" />
+    <Content Remove="wwwroot\lib\fontawesome\fonts\FontAwesome.otf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\lib\fullcalendar\css\fullcalendar.css" />
+    <None Include="wwwroot\lib\fullcalendar\js\fullcalendar.js" />
+    <None Include="wwwroot\lib\jquery\dist\jquery-ui.custom.min.js" />
+    <None Include="wwwroot\lib\fullcalendar\css\fullcalendar.print.css" />
+    <None Include="wwwroot\lib\moment\js\moment.js" />
+    <None Include="wwwroot\lib\moment\js\locales.js" />
+    <None Include="wwwroot\lib\moment\js\moment-with-locales.js" />
+    <None Include="wwwroot\lib\fontawesome\css\font-awesome.css" />
+    <None Include="wwwroot\lib\fontawesome\fonts\fontawesome-webfont.eot" />
+    <None Include="wwwroot\lib\fontawesome\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\lib\fontawesome\fonts\fontawesome-webfont.ttf" />
+    <None Include="wwwroot\lib\fontawesome\fonts\fontawesome-webfont.woff" />
+    <None Include="wwwroot\lib\fontawesome\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\lib\fontawesome\fonts\FontAwesome.otf" />
   </ItemGroup>
 </Project>

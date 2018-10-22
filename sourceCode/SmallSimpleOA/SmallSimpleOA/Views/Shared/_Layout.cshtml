@@ -4,8 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - SmallSimpleOA</title>
-
+    <link rel="stylesheet" href="~/lib/fullcalendar/css/fullcalendar.css" />
+    <link rel="stylesheet" href="~/lib/fullcalendar/css/fullcalendar.print.css" media="print" />
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" />
+    <link rel="stylesheet" href="~/lib/fontawesome/css/font-awesome.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/additionalCss.css" />
 
@@ -24,7 +27,7 @@
             <div class="col-2 bg-dark">
                 <nav class="nav flex-column ">
                     <a class="nav-link active text-white" asp-controller="Home" asp-action="Home">Home</a>
-                    <a class="nav-link text-white" asp-controller="" asp-action="">Attendance</a>
+                    <a class="nav-link text-white" asp-controller="Attendance" asp-action="History">Attendance</a>
                     <a class="nav-link text-white" asp-controller="" asp-action="">Ask for Leave</a>
                     <a class="nav-link disabled text-white" asp-controller="" asp-action="">Add New Staff</a>
                 </nav>
@@ -37,8 +40,14 @@
     </div>
 
     <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery/dist/jquery-ui.custom.min.js"></script>
     <script src="~/lib/Popper/Popper.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="~/lib/fullcalendar/js/fullcalendar.js"></script>
+    <script src="~/lib/moment/js/moment.js"></script>
+    <!--script src="~/lib/moment/js/moment-with-locales.js"></!--script>
+    <script src="~/lib/moment/js/locales.js"></script-->
+    <script src="~/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
 

@@ -1,0 +1,66 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<form>
+    <div class="container row ">
+        <div class="col-12 container">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">From</span>
+                </div>
+                <input type="text" id="dtpFrom" class="form-control datetimepicker-input" data-toggle="datetimepicker" data-target="#dtpFrom">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">To</span>
+                </div>
+                <input type="text" id="dtpTo" class="form-control datetimepicker-input" data-toggle="datetimepicker" data-target="#dtpTo">
+            </div>
+        </div>
+    </div>
+    <div class="container" row>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Reason</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+        </div>
+    </div>
+    <div class="container row ">
+        <div class="col-12 container">
+            MEMO
+            <textarea class="form-control rounded-0" id="exampleFormControlTextarea1" rows="10"></textarea>
+        </div>
+    </div>
+    <div class="container row ">
+        <div class="col-8">
+        </div>
+        <div class="col-4">
+            <div class="row">
+                <div class="col-6">
+                </div>
+                <div class="col-3 container">
+                    <button type="button" class="btn btn-info">BACK</button>
+                </div>
+                <div class="col-3 container">
+                    <button type="button" class="btn btn-success">SUBMIT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@section Scripts{
+    <script type="text/javascript">$(function () {
+        $('#dtpFrom').datetimepicker();
+        $('#dtpTo').datetimepicker({
+             useCurrent: false
+         });
+     });
+
+    $("#dtpFrom").on("change.datetimepicker", function (e) {
+            $('#dtpTo').datetimepicker('minDate', e.date);
+        });
+        $("#dtpTo").on("change.datetimepicker", function (e) {
+            $('#dtpFrom').datetimepicker('maxDate', e.date);
+        });</script>
+}

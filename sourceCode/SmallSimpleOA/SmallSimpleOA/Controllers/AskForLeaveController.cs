@@ -11,12 +11,17 @@ namespace SmallSimpleOA.Controllers
     public class AskForLeaveController : Controller
     {
         // GET: /<controller>/
-        public IActionResult Index()
+        public IActionResult List()
         {
             return View();
         }
 
         public IActionResult New()
+        {
+            return View();
+        }
+
+        public IActionResult Detail()
         {
             return View();
         }

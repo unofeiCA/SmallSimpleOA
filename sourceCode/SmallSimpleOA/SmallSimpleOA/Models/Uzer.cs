@@ -10,7 +10,7 @@ namespace SmallSimpleOA.Models
         public string LastName { get; set; }
         public string FirstName { get; set; }
         public int? Department { get; set; }
-        public int? UzerLevel { get; set; }
+        public int? UzerLevel { get; set; } //-1: super user; 0: system; other: normal user;
         public string Email { get; set; }
         public string Password { get; set; }
         public string Salt { get; set; }

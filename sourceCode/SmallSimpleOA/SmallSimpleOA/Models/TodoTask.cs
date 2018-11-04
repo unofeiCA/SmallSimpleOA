@@ -13,5 +13,7 @@ namespace SmallSimpleOA.Models
         public DateTime? CreateTime { get; set; }
         public DateTime? ModifyTime { get; set; }
         public DateTime? DeadLine { get; set; }
+        public int? UzerId { get; set; }
+
     }
 }

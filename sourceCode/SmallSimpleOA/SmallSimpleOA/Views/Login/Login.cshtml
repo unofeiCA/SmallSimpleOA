@@ -31,9 +31,11 @@
                 <label for="exampleInputPassword1">Password</label>
                 <input type="password" class="form-control" asp-for="Password" placeholder="Password"/>
             </div>
-            <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+            <div class="form-group">
+                @if (ViewData["pwdNotCorrect"] != null && ViewData["pwdNotCorrect"].Equals("1"))
+                 {
+                     <label class="form-check-label text-danger"  >Incorrect Password or Email</label>
+                 }
             </div>
             <button type="submit" class="btn btn-dark">Submit</button>
         </form>

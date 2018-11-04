@@ -3,28 +3,37 @@ using Microsoft.AspNetCore.Mvc;
 using SmallSimpleOA.Models;
 using System.Security.Cryptography;
 using System.Text;
-using System.Linq;
 using Microsoft.AspNetCore.Http;
+using SmallSimpleOA.Services;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace SmallSimpleOA.Controllers
 {
     public class LoginController : Controller
     {
 
-        private readonly SmallSimpleOAContext _context;
+        //private readonly SmallSimpleOAContext _context;
 
-        public LoginController(SmallSimpleOAContext context)
-        {
-            _context = context;
-        }
-
+        //public LoginController(SmallSimpleOAContext context)
+        //{
+        //    _context = context;
+        //}
+        public LoginController(){}
 
 
         [HttpPost]
         public IActionResult DoLogin(string email, string password)
         {
+            HttpContext.Session.SetInt32("uid", 1);
+            return RedirectToAction("Home", "Home");
 
-            Uzer user = _context.Uzer.Single(e => e.Email.Equals(email));
+            if (email == null || password == null)
+            {
+                return RedirectToAction("Login", "Login", new { pwdNotCorrect = "1" });
+            }
+
+            Uzer user = UserService.FindUserByEmail(email);
+
             string hash = MD5Value(password + user.Salt);
             if (hash.Equals(user.Password))
             {
@@ -39,22 +48,23 @@ namespace SmallSimpleOA.Controllers
                 user.Salt = salt;
                 string newPwd = MD5Value(password + salt);
                 user.Password = newPwd;
-                _context.Update(user);
-                _context.SaveChanges();
-                HttpContext.Session.SetString("uid", "" + user.Id);
+                UserService.UpdateUser(user);
+                HttpContext.Session.SetInt32("uid", user.Id);
                 return RedirectToAction("Home", "Home");
             }else{
-
-                return RedirectToAction("Login", "Login");
+                return RedirectToAction("Login", "Login", new {pwdNotCorrect = "1"});
 
             }
 
 
         }
 
-        public IActionResult Login()
+        public IActionResult Login(string pwdNotCorrect)
         {
-
+            if(pwdNotCorrect != null && pwdNotCorrect.Equals("1"))
+            {
+                ViewData["pwdNotCorrect"] = "1";
+            }
             return View();
         }
 

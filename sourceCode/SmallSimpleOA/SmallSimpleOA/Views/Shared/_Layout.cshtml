@@ -6,6 +6,9 @@
     <title>@ViewData["Title"] - SmallSimpleOA</title>
     <link rel="stylesheet" href="~/lib/fullcalendar/css/fullcalendar.css" />
     <link rel="stylesheet" href="~/lib/fullcalendar/css/fullcalendar.print.css" media="print" />
+    <link rel="stylesheet" href="~/lib/jquery-ui-1.12.1/jquery-ui.css" />
+    <link rel="stylesheet" href="~/lib/jquery-ui-1.12.1/jquery-ui.structure.css" />
+    <link rel="stylesheet" href="~/lib/jquery-ui-1.12.1/jquery-ui.theme.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" href="~/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" />
     <link rel="stylesheet" href="~/lib/fontawesome/css/font-awesome.css" />
@@ -14,7 +17,7 @@
 
 </head>
 <body class="fill-h fill-w">
-    <div class="row fixed-top bg-dark h-50px pl-3">
+    <div class="row fixed-top bg-dark h-50px pl-3 no-margin">
         <div class="col-12 d-flex align-items-center ">
             <h2 class="text-white font-weight-bold font-italic">SmallSimpleOA</h2>
         </div>
@@ -39,9 +42,13 @@
         </div>
     </div>
 
+    <div id="signPopBase" class="row fixed-bottom  h-5px w-100 no-margin">
+
+    </div>
+
     <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/lib/jquery/dist/jquery-ui.custom.min.js"></script>
-    <script src="~/lib/Popper/Popper.js"></script>
+    <!--script src="~/lib/jquery/dist/jquery-ui.custom.min.js"></!--script-->
+    <script src="~/lib/jquery-ui-1.12.1/jquery-ui.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.js"></script>
     <script src="~/lib/fullcalendar/js/fullcalendar.js"></script>
     <script src="~/lib/moment/js/moment.js"></script>

@@ -15,7 +15,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Login\" />
-    <Folder Include="wwwroot\lib\Popper\" />
     <Folder Include="Views\Todo\" />
     <Folder Include="Views\Attendance\" />
     <Folder Include="wwwroot\lib\fullcalendar\" />
@@ -31,6 +30,8 @@
     <Folder Include="wwwroot\lib\fontawesome\css\" />
     <Folder Include="wwwroot\lib\fontawesome\fonts\" />
     <Folder Include="Views\StaffManage\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\lib\bootstrap\css\.DS_Store" />

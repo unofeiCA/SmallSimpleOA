@@ -25,7 +25,7 @@ namespace SmallSimpleOA.Services
             DateTime timeEnd = new DateTime(year, month, day, 0, 0, 0);
 
             SmallSimpleOAContext ctx = new SmallSimpleOAContext();
-            return ctx.TodoTask.Where(t => t.UzerId.Equals(uid) && t.DeadLine >= timeStart && t.DeadLine < timeEnd).ToList();
+            return ctx.TodoTask.Where(t => t.UzerId.Equals(uid) && t.DeadLine >= timeStart && t.DeadLine < timeEnd && t.Valid == true).ToList();
 
         }
 

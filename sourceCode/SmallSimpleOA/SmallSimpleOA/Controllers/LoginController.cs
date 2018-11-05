@@ -1,11 +1,11 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using SmallSimpleOA.Models;
-using System.Security.Cryptography;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 using SmallSimpleOA.Services;
 using Microsoft.AspNetCore.Http.Extensions;
+using SmallSimpleOA.Utilities;
 
 namespace SmallSimpleOA.Controllers
 {
@@ -34,19 +34,12 @@ namespace SmallSimpleOA.Controllers
 
             Uzer user = UserService.FindUserByEmail(email);
 
-            string hash = MD5Value(password + user.Salt);
+            string hash = MD5Util.MD5Value(password + user.Salt);
             if (hash.Equals(user.Password))
             {
-                Random rnd = new Random();
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < 4; i ++)
-                {
-                    int r = rnd.Next(97, 123); // from a ~ z in ascii
-                    sb.Append((char)r);
-                }
-                string salt = sb.ToString();
+                string salt = UserPasswordUtil.GenerateSalt();
                 user.Salt = salt;
-                string newPwd = MD5Value(password + salt);
+                string newPwd = UserPasswordUtil.GeneratePasswordAfterSalt(password, salt);
                 user.Password = newPwd;
                 UserService.UpdateUser(user);
                 HttpContext.Session.SetInt32("uid", user.Id);
@@ -69,17 +62,6 @@ namespace SmallSimpleOA.Controllers
         }
 
 
-        private string MD5Value(string s)
-        {
-            MD5 md5 = new MD5CryptoServiceProvider();
-            byte[] md5Bytes = md5.ComputeHash(Encoding.UTF8.GetBytes(s));
-            StringBuilder sBuilder = new StringBuilder();
-            for (int i = 0; i < md5Bytes.Length; i++)
-            {
-                sBuilder.Append(md5Bytes[i].ToString("x2"));
-            }
-            string res = sBuilder.ToString();
-            return res;
-        }
+
     }
 }

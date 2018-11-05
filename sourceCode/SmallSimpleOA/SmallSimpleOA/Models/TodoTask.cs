@@ -6,7 +6,7 @@ namespace SmallSimpleOA.Models
     public partial class TodoTask
     {
         public int Id { get; set; }
-        public bool? Valid { get; set; }
+        public bool? Valid { get; set; } = true;
         public int? Status { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }

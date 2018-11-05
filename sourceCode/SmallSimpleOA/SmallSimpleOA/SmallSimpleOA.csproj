@@ -32,6 +32,7 @@
     <Folder Include="Views\StaffManage\" />
     <Folder Include="ViewModels\" />
     <Folder Include="Services\" />
+    <Folder Include="Utilities\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\lib\bootstrap\css\.DS_Store" />

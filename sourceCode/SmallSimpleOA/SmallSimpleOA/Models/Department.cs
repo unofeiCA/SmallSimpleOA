@@ -6,7 +6,7 @@ namespace SmallSimpleOA.Models
     public partial class Department
     {
         public int Id { get; set; }
-        public bool? Valid { get; set; }
+        public bool? Valid { get; set; } = true;
         public string Name { get; set; }
         public int? TotalStaffLevel { get; set; }
     }

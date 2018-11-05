@@ -26,7 +26,7 @@ namespace SmallSimpleOA.Services
             DateTime timeEnd = new DateTime(year, month, day, 0, 0, 0);
 
             SmallSimpleOAContext ctx = new SmallSimpleOAContext();
-            return ctx.Attendance.Where(a => a.UzerId.Equals(uid) && a.ActionTime >= timeStart && a.ActionTime < timeEnd ).ToList();
+            return ctx.Attendance.Where(a => a.UzerId.Equals(uid) && a.ActionTime >= timeStart && a.ActionTime < timeEnd && a.Valid == true).ToList();
         
         }
 
@@ -43,7 +43,7 @@ namespace SmallSimpleOA.Services
             DateTime timeEnd = new DateTime(year, month, day, 0, 0, 0);
 
             SmallSimpleOAContext ctx = new SmallSimpleOAContext();
-            return ctx.Attendance.Where(a => a.UzerId.Equals(uid) && a.ActionTime >= timeStart && a.ActionTime < timeEnd).ToList();
+            return ctx.Attendance.Where(a => a.UzerId.Equals(uid) && a.ActionTime >= timeStart && a.ActionTime < timeEnd && a.Valid == true).ToList();
 
         }
 

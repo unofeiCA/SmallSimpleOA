@@ -6,7 +6,7 @@ namespace SmallSimpleOA.Models
     public partial class Attendance
     {
         public int Id { get; set; }
-        public bool? Valid { get; set; }
+        public bool? Valid { get; set; } = true;
         public int? UzerId { get; set; }
         public bool? ActionType { get; set; }
         public DateTime? ActionTime { get; set; }

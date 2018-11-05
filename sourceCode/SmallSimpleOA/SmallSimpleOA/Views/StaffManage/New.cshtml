@@ -3,35 +3,93 @@
 *@
 @{
 }
-<form>
-    <div class="container row ">
-        <div class="col-12 container">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">From</span>
-                </div>
-                <input type="text" id="dtpFrom" class="form-control datetimepicker-input" data-toggle="datetimepicker" data-target="#dtpFrom">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">To</span>
-                </div>
-                <input type="text" id="dtpTo" class="form-control datetimepicker-input" data-toggle="datetimepicker" data-target="#dtpTo">
-            </div>
-        </div>
-    </div>
-    <div class="container" row>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroup-sizing-default">Reason</span>
-            </div>
-            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+@model SmallSimpleOA.ViewModels.StaffManageNewViewModel;
+<form asp-controller="StaffManage" asp-action="DoNew">
+    <div class="container row">
+        <div class="col-12">
+            <h2>Add New User</h2>
         </div>
     </div>
     <div class="container row ">
-        <div class="col-12 container">
-            MEMO
-            <textarea class="form-control rounded-0" id="exampleFormControlTextarea1" rows="10"></textarea>
+        <div class="col-6 container">
+            <div class="input-group mb-3 w-100">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Email</span>
+                </div>
+                <input type="email" asp-for="Email" class="flex-fill">
+            </div>
+        </div>
+        <div class="col-6 container">
+            <div class="input-group mb-3 w-100">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Password</span>
+                </div>
+                <input type="text" asp-for="Password" class="flex-fill">
+            </div>
         </div>
     </div>
+    <div class="container row ">
+        <div class="col-6 container">
+            <div class="input-group mb-3 w-100">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">First Name</span>
+                </div>
+                <input type="text" asp-for="FirstName" class="flex-fill">
+            </div>
+        </div>
+        <div class="col-6 container">
+            <div class="input-group mb-3 w-100">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Last Name</span>
+                </div>
+                <input type="text" asp-for="LastName" class="flex-fill">
+            </div>
+        </div>
+    </div>
+    <div class="container row ">
+        <div class="col-6 container">
+            <div class="input-group mb-3 w-100">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Department</span>
+                </div>
+                <select class="custom-select" asp-for="Department">
+                    <option selected>Choose...</option>
+                    @foreach (var department in Model.DepartmentList)
+                    {
+                        <option value="@department.Id">@department.Name</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="col-6 container">
+            <div class="input-group mb-3 w-100">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Level</span>
+
+                </div>
+                <select class="custom-select" asp-for="UzerLevel">
+                    <option selected>Choose...</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    @if (Model.LastNewSuccess == 1)
+    {
+        <div class="container row">
+            <div class="col-12">
+                <p class="text-success">@Model.LastNewPrompt</p>
+            </div>
+        </div>
+    }
+    else if (Model.LastNewSuccess == -1)
+    {
+        <div class="container row">
+            <div class="col-12">
+                <p class="text-danger">@Model.LastNewPrompt</p>
+            </div>
+        </div>
+    }
+    <br />
     <div class="container row ">
         <div class="col-8">
         </div>
@@ -40,27 +98,47 @@
                 <div class="col-6">
                 </div>
                 <div class="col-3 container">
-                    <button type="button" class="btn btn-info">BACK</button>
+                    <button type="button" class="btn btn-info" onclick="javascript:history.go(-1); return false;">BACK</button>
                 </div>
                 <div class="col-3 container">
-                    <button type="button" class="btn btn-success">SUBMIT</button>
+                    <button type="submit" class="btn btn-success">SUBMIT</button>
                 </div>
             </div>
         </div>
     </div>
 </form>
-@section Scripts{
-    <script type="text/javascript">$(function () {
-        $('#dtpFrom').datetimepicker();
-        $('#dtpTo').datetimepicker({
-             useCurrent: false
-         });
-     });
 
-    $("#dtpFrom").on("change.datetimepicker", function (e) {
-            $('#dtpTo').datetimepicker('minDate', e.date);
-        });
-        $("#dtpTo").on("change.datetimepicker", function (e) {
-            $('#dtpFrom').datetimepicker('maxDate', e.date);
-        });</script>
+@section Scripts
+{
+<script>
+    var levels = [
+    @{
+        for (var i = 0; i < Model.DepartmentList.Count; i++)
+        {
+            var department = Model.DepartmentList[i];
+            if (i == Model.DepartmentList.Count - 1)
+            {
+                @department.TotalStaffLevel
+            }
+            else
+            {
+                @department.TotalStaffLevel@:,
+            }
+        }
+    }
+    ];
+    $("#Department").change(function(){
+        var i = $("#Department").prop("selectedIndex") - 1;
+        $("#UzerLevel").find('option').remove();
+        if(i < 0)
+        {
+            $("#UzerLevel").append("<option selected>Choose...</option>");
+            return;
+        }
+        for(var j = 1; j <= levels[i]; j ++)
+        {
+            $("#UzerLevel").append("<option value='" + j +"'>" + j + "</option>");
+        }
+    });
+</script>
 }

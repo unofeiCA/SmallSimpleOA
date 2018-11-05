@@ -15,7 +15,7 @@ namespace SmallSimpleOA.Services
         {
 
             SmallSimpleOAContext ctx = new SmallSimpleOAContext();
-            return ctx.AskForLeave.Where(a => a.Applicant.Equals(uid)).ToList();
+            return ctx.AskForLeave.Where(a => a.Applicant.Equals(uid) && a.Valid == true).ToList();
 
         }
 
@@ -23,7 +23,7 @@ namespace SmallSimpleOA.Services
         {
 
             SmallSimpleOAContext ctx = new SmallSimpleOAContext();
-            return ctx.AskForLeave.Where(a => a.CurrentAt.Equals(uid)).ToList();
+            return ctx.AskForLeave.Where(a => a.CurrentAt.Equals(uid) && a.Valid == true).ToList();
 
         }
 

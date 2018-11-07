@@ -3,67 +3,86 @@
 *@
 @{
 }
-<form>
+@model SmallSimpleOA.ViewModels.AskFroLeaveNewViewModel;
+<form asp-controller="AskForLeave" asp-action="DoNew" method="post">
+    <div class="row container">
+        <div class="col-12">
+            <h3 class="float-left">New Ask For Leave</h3>
+        </div>
+    </div>
     <div class="container row ">
         <div class="col-12 container">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">From</span>
                 </div>
-                <input type="text" id="dtpFrom" class="form-control datetimepicker-input" data-toggle="datetimepicker" data-target="#dtpFrom">
+                <input type="text" id="StartTime" name="StartTime" class="form-control datetimepicker-input" data-toggle="datetimepicker" data-target="#StartTime">
                 <div class="input-group-prepend">
                     <span class="input-group-text">To</span>
                 </div>
-                <input type="text" id="dtpTo" class="form-control datetimepicker-input" data-toggle="datetimepicker" data-target="#dtpTo">
-                </div>
+                <input type="text" id="EndTime" name="EndTime" class="form-control datetimepicker-input" data-toggle="datetimepicker" data-target="#EndTime">
+            </div>
         </div>
     </div>
-    <div class="container" row>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroup-sizing-default">Reason</span>
+    <div class="container row">
+        <div class="col-12 container">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Reason</span>
+                </div>
+                <input type="text" class="form-control" asp-for="Reason" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
             </div>
-            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
         </div>
     </div>
     <div class="container row ">
         <div class="col-12 container">
-            MEMO
-            <textarea class="form-control rounded-0" id="exampleFormControlTextarea1" rows="10"></textarea>
+            Memo
+            <textarea class="form-control rounded-0" asp-for="Memo" rows="10"></textarea>
         </div>
     </div>
-    <div class="container row ">
-        <div class="col-8">
-        </div>
-        <div class="col-4">
-            <div class="row">
-                <div class="col-6">
-                </div>
-                <div class="col-3 container">
-                    <button type="button" class="btn btn-info">BACK</button>
-                </div>
-                <div class="col-3 container">
-                    <button type="button" class="btn btn-success">SUBMIT</button>
-                </div>
+
+    @if (Model.LastNewSuccess == 1)
+    {
+        <div class="container row">
+            <div class="col-12">
+                <p class="text-success">@Model.LastNewPrompt</p>
             </div>
+        </div>
+    }
+    else if (Model.LastNewSuccess == -1)
+    {
+        <div class="container row">
+            <div class="col-12">
+                <p class="text-danger">@Model.LastNewPrompt</p>
+            </div>
+        </div>
+    }
+    <br />
+    <div class="container row ">
+        <div class="col-12 ">
+            <div class="pl-2  float-right">
+                <button type="submit" class="btn btn-success">SUBMIT</button>
+            </div>
+            <div class="pl-2  float-right">
+                <button type="button" class="btn btn-info" onclick="javascript:history.go(-1); return false;">BACK</button>
+            </div>
+
         </div>
     </div>
 </form>
-
-@section Scripts{ 
+@section Scripts{
 <script type="text/javascript">
-     $(function () {
-        $('#dtpFrom').datetimepicker();
-        $('#dtpTo').datetimepicker({
+$(function () {
+        $('#StartTime').datetimepicker();
+        $('#EndTime').datetimepicker({
              useCurrent: false
          });
      });
 
-    $("#dtpFrom").on("change.datetimepicker", function (e) {
-            $('#dtpTo').datetimepicker('minDate', e.date);
+    $("#StartTime").on("change.datetimepicker", function (e) {
+            $('#EndTime').datetimepicker('minDate', e.date);
         });
-        $("#dtpTo").on("change.datetimepicker", function (e) {
-            $('#dtpFrom').datetimepicker('maxDate', e.date);
-        });
-</script>
+        $("#EndTime").on("change.datetimepicker", function (e) {
+            $('#StartTime').datetimepicker('maxDate', e.date);
+        });</script>
 }

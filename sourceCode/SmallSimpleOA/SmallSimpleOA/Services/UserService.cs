@@ -11,6 +11,12 @@ namespace SmallSimpleOA.Services
         {
         }
 
+        public static Uzer FindUserByID(int uid)
+        {
+            return new SmallSimpleOAContext().Uzer.Single(e => e.Id == uid && e.Valid == true);
+
+        }
+
         public static Uzer FindUserByEmail(string email)
         {
             return new SmallSimpleOAContext().Uzer.Single(e => e.Email.Equals(email) && e.Valid == true);
@@ -38,6 +44,18 @@ namespace SmallSimpleOA.Services
             SmallSimpleOAContext ctx = new SmallSimpleOAContext();
             ctx.Add(u);
             ctx.SaveChanges();
+        }
+
+        public static Uzer FindSupervisorByUid(int uid)
+        {
+            Uzer u = FindUserByID(uid);
+            Department department = DepartmentService.FindDepartmentByID((int)u.Department);
+            if (u.UzerLevel >= department.TotalStaffLevel)
+            {
+                return null;
+            }
+            Uzer supervisor = new SmallSimpleOAContext().Uzer.Single(s => s.Valid == true && s.Department == u.Department && s.UzerLevel == (u.UzerLevel + 1));
+            return supervisor;
         }
     }
 }

@@ -8,7 +8,14 @@ namespace SmallSimpleOA.Models
         public int Id { get; set; }
         public bool? Valid { get; set; } = true;
         public int? UzerId { get; set; }
-        public bool? ActionType { get; set; }
         public DateTime? ActionTime { get; set; }
+        public int? ActionType { get; set; }
+
+    }
+
+    public enum AttendanceType
+    {
+        In = 1,
+        Out = 2
     }
 }

@@ -48,6 +48,7 @@ namespace SmallSimpleOA.Controllers
             return View();
         }
 
+        [HttpPost]
         public IActionResult DoNew(string startTime, string endTime, string reason, string memo)
         {
 

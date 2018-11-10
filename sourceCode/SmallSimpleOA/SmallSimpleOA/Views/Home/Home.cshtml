@@ -84,24 +84,76 @@
 </div>
 @if (@Model.NeedClockIn)
 {
-    <div id="signPop" class="card text-white bg-info mb-3 float-right" style="max-width: 18rem;">
+    <div id="signPop" class="card text-white bg-info mb-3" style="max-width: 18rem;">
         <div class="card-header">You Have NOT Clocked In Today! Clock In Now?</div>
         <div class="card-body row">
-            <div class="col-6 align-items-center">
-                <button type="button" class="btn btn-light">Cancel</button>
+            <div class="col-auto">
             </div>
-            <div class="col-6 align-items-center">
-                <button type="button" class="btn btn-light">Sure</button>
+            <div class="col-auto button-light">
+                <a class="text-white" onclick="cancelClock();" href="#">No thanks</a>
+            </div>
+            <div class="col-2">
+            </div>
+            <div class="col-auto button-light">
+                <a class="text-white" onclick="clockIn();" href="#">Sure</a>
+            </div>
+            <div class="col-auto">
             </div>
         </div>
     </div>
 
+
     @section Scripts{
         <script>
-$("#signPop").position({
-        my: "right bottom",
-        at: "right-15 bottom-15",
-        of: "#signPopBase"
-    });</script>
+
+            $("#signPop").position({
+                my: "right bottom",
+                at: "right-15 bottom-15",
+                of: "#signPopBase"
+            });
+
+            function clockIn()
+            {
+                $.ajax({
+                    type: "POST",
+                    data: {actionType : "1", by : "ajax"},
+                    url: "@Url.Action("DoClock", "Attendance")",
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response != "0")
+                        {
+                            alert(response);
+                        }
+                        else
+                        {
+                            
+                            $("#signPop").fadeOut({'complete' :
+                                function()
+                                {
+                                    $("#signPop").children(".card-body").remove();
+                                    $("#signPop").children(".card-header").text("Clock in success!");
+                                    $("#signPop").fadeIn({'complete' :
+                                        function()
+                                        {
+
+                                           $("#signPop").delay(1000).fadeOut();
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    },
+                    error: function (response) {
+                        alert("Some unknown error occured, please try it again later.");
+                    }
+
+                });
+            }
+
+            function cancelClock()
+            {
+                $("#signPop").fadeOut();
+            }
+        </script>
     }
 }

@@ -20,7 +20,7 @@ namespace SmallSimpleOA.Controllers
             }
             List<AskForLeave> askForLeaveList = AskForLeaveService.FindAskForLeaveByCurrentAt((int)uid);
             List<TodoTask> todoTaskList = TodoTaskService.FindTodoTaskByUserAndDate((int)uid, DateTime.Now);
-            List<Attendance> attendanceList = AttendanceService.FindAttendanceByUserAndDate((int)uid, DateTime.Now);
+            List<Attendance> attendanceList = AttendanceService.FindAttendanceByUserAndDateAndType((int)uid, DateTime.Now, AttendanceType.In);
             Boolean need = (attendanceList == null || attendanceList.Count <= 0) ? true : false;
             HomeHomeViewModel homeHomeViewModel = new HomeHomeViewModel(askForLeaveList, todoTaskList, need);
             return View(homeHomeViewModel);

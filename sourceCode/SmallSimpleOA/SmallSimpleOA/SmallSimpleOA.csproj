@@ -33,6 +33,9 @@
     <Folder Include="ViewModels\" />
     <Folder Include="Services\" />
     <Folder Include="Utilities\" />
+    <Folder Include="Hubs\" />
+    <Folder Include="Views\Message\" />
+    <Folder Include="wwwroot\lib\Popper\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\lib\bootstrap\css\.DS_Store" />

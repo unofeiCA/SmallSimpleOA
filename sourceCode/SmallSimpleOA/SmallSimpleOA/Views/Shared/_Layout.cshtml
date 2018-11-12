@@ -17,7 +17,7 @@
 
 </head>
 <body class="fill-h fill-w">
-    <div class="row fixed-top bg-dark h-50px pl-3 no-margin">
+    <div id="messagePopBase" class="row fixed-top bg-dark h-50px pl-3 no-margin">
         <div class="col-12 d-flex align-items-center ">
             <h2 class="text-white font-weight-bold font-italic">SmallSimpleOA</h2>
         </div>
@@ -30,6 +30,7 @@
             <div class="col-2 bg-dark">
                 <nav class="nav flex-column ">
                     <a class="nav-link active text-white" asp-controller="Home" asp-action="Home">Home</a>
+                    <a class="nav-link text-white" asp-controller="Message" asp-action="History">Message</a>
                     <a class="nav-link text-white" asp-controller="Attendance" asp-action="History">Attendance</a>
                     <a class="nav-link text-white" asp-controller="AskForLeave" asp-action="List">Ask for Leave</a>
                     <a class="nav-link disabled text-white" asp-controller="StaffManage" asp-action="New">Add New Staff</a>
@@ -46,15 +47,60 @@
 
     </div>
 
+
+    <div id="messagePop" class="card text-white bg-info mb-3" style="max-width: 18rem;">
+        <div class="card-header">You Have NOT Clocked In Today! Clock In Now?</div>
+        <div class="card-body row">
+            <div class="col-auto">
+            </div>
+            <div class="col-auto button-light">
+                <a class="text-white" onclick="cancelClock();" href="#">No thanks</a>
+            </div>
+            <div class="col-2">
+            </div>
+            <div class="col-auto button-light">
+                <a class="text-white" onclick="clockIn();" href="#">Sure</a>
+            </div>
+            <div class="col-auto">
+            </div>
+        </div>
+    </div>
+
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <!--script src="~/lib/jquery/dist/jquery-ui.custom.min.js"></!--script-->
     <script src="~/lib/jquery-ui-1.12.1/jquery-ui.js"></script>
+    <script src="~/lib/Popper/Popper.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.js"></script>
     <script src="~/lib/moment/js/moment.min.js"></script>
     <script src="~/lib/fullcalendar/js/fullcalendar.js"></script>
     <script src="~/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
+
+    <script>
+
+         $("#messagePop").position({
+                my: "right top",
+                at: "right-15 top-15",
+                of: "#messagePopBase"
+            });
+        $("#messagePop").hide();
+        var connection = new signalR.HubConnectionBuilder().withUrl("/Message/MessageHub").build();
+        connection.start().catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        connection.on("ReceiveMessage", function (user, message)
+        {
+            var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            var encodedMsg = user + " says " + msg;
+            var li = document.createElement("li");
+            li.textContent = encodedMsg;
+            document.getElementById("messagesList").appendChild(li);
+        });
+
+    </script>
 
     @RenderSection("Scripts", required: false)
 </body>

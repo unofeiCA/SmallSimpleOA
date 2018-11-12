@@ -1,6 +1,9 @@
 ﻿.w-15 {
     width: 15% !important;
 }
+.h-25px {
+    height: 25px;
+}
 
 .h-50px {
     height: 50px;
@@ -20,4 +23,129 @@
 
 .no-margin {
     margin:0;
+}
+.h-5 {
+    height: 5% !important;
+}
+.h-10 {
+    height: 10% !important;
+}
+
+.h-15 {
+    height: 15% !important;
+}
+
+.h-20 {
+    height: 20% !important;
+}
+
+.h-30 {
+    height: 30% !important;
+}
+
+.h-35 {
+    height: 35% !important;
+}
+
+.h-40 {
+    height: 40% !important;
+}
+
+.h-45 {
+    height: 45% !important;
+}
+
+.h-55 {
+    height: 55% !important;
+}
+
+.h-60 {
+    height: 60% !important;
+}
+
+.h-65 {
+    height: 65% !important;
+}
+
+.h-70 {
+    height: 70% !important;
+}
+
+.h-80 {
+    height: 80% !important;
+}
+
+.h-85 {
+    height: 85% !important;
+}
+
+.h-90 {
+    height: 90% !important;
+}
+
+.h-95 {
+    height: 95% !important;
+}
+
+.mh-5 {
+    max-height: 5% !important;
+}
+.mh-10 {
+    max-height: 10% !important;
+}
+
+.mh-15 {
+    max-height: 15% !important;
+}
+
+.mh-20 {
+    max-height: 20% !important;
+}
+
+.mh-30 {
+    max-height: 30% !important;
+}
+
+.mh-35 {
+    max-height: 35% !important;
+}
+
+.mh-40 {
+    max-height: 40% !important;
+}
+
+.mh-45 {
+    max-height: 45% !important;
+}
+
+.mh-55 {
+    max-height: 55% !important;
+}
+
+.mh-60 {
+    max-height: 60% !important;
+}
+
+.mh-65 {
+    max-height: 65% !important;
+}
+
+.mh-70 {
+    max-height: 70% !important;
+}
+
+.mh-80 {
+    max-height: 80% !important;
+}
+
+.mh-85 {
+    max-height: 85% !important;
+}
+
+.mh-90 {
+    max-height: 90% !important;
+}
+
+.mh-95 {
+    max-height: 95% !important;
 }

@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using SmallSimpleOA.Models;
+using SmallSimpleOA.Hubs;
 
 namespace SmallSimpleOA
 {
@@ -43,6 +44,8 @@ namespace SmallSimpleOA
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             string connection = @"Server=localhost,1433;Database=SmallSimpleOA;User ID=sa;Password=SSOAPassw0rd;ConnectRetryCount=0";
             services.AddDbContext<SmallSimpleOAContext>(options => options.UseSqlServer(connection));
+
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,6 +65,11 @@ namespace SmallSimpleOA
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseSession();
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<MessageHub>("/Message/MessageHub");
+            });
 
             app.UseMvc(routes =>
             {

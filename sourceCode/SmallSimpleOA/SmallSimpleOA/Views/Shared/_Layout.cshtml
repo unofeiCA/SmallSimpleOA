@@ -30,7 +30,7 @@
             <div class="col-2 bg-dark">
                 <nav class="nav flex-column ">
                     <a class="nav-link active text-white" asp-controller="Home" asp-action="Home">Home</a>
-                    <a class="nav-link text-white" asp-controller="Message" asp-action="History">Message</a>
+                    <a class="nav-link text-white" asp-controller="Message" asp-action="Message">Message</a>
                     <a class="nav-link text-white" asp-controller="Attendance" asp-action="History">Attendance</a>
                     <a class="nav-link text-white" asp-controller="AskForLeave" asp-action="List">Ask for Leave</a>
                     <a class="nav-link disabled text-white" asp-controller="StaffManage" asp-action="New">Add New Staff</a>
@@ -91,13 +91,10 @@
             return console.error(err.toString());
         });
 
-        connection.on("ReceiveMessage", function (user, message)
+        connection.on("ReceiveMessage", function (uid, userName, message)
         {
             var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            var encodedMsg = user + " says " + msg;
-            var li = document.createElement("li");
-            li.textContent = encodedMsg;
-            document.getElementById("messagesList").appendChild(li);
+            alert('message received');
         });
 
     </script>

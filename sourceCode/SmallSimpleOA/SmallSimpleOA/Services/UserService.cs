@@ -2,6 +2,7 @@
 using SmallSimpleOA.Models;
 using System.Linq;
 using SmallSimpleOA.Utilities;
+using System.Collections.Generic;
 
 namespace SmallSimpleOA.Services
 {
@@ -9,6 +10,12 @@ namespace SmallSimpleOA.Services
     {
         public UserService()
         {
+        }
+
+        public static List<Uzer> FindUserByDepartment(int depId)
+        {
+            return new SmallSimpleOAContext().Uzer.Where(e => e.Department == depId && e.Valid == true).ToList();
+
         }
 
         public static Uzer FindUserByID(int uid)

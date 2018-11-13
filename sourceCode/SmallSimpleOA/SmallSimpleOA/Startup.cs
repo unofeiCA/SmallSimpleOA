@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using SmallSimpleOA.Models;
 using SmallSimpleOA.Hubs;
+using Microsoft.AspNetCore.WebSockets;
 
 namespace SmallSimpleOA
 {
@@ -66,10 +67,6 @@ namespace SmallSimpleOA
             app.UseCookiePolicy();
             app.UseSession();
 
-            app.UseSignalR(routes =>
-            {
-                routes.MapHub<MessageHub>("/Message/MessageHub");
-            });
 
             app.UseMvc(routes =>
             {
@@ -77,6 +74,15 @@ namespace SmallSimpleOA
                     name: "default",
                     template: "{controller=Login}/{action=Login}/{id?}");
             });
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<MessageHub>("/Message/MessageHub");
+            });
+
+           
         }
+
+
     }
 }

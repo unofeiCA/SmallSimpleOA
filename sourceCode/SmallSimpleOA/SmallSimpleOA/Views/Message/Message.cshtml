@@ -3,7 +3,10 @@
 *@
 @{
 }
-<div class="container row h-100 mh-100">
+@model SmallSimpleOA.ViewModels.MessageMessageViewModel
+@using Microsoft.AspNetCore.Http
+
+<div class="container row h-100 mh-100 pb-2">
     <div class="col-12 h-100">
         <div class="row h-5 ">
             <div class="col-12 h-100">
@@ -15,36 +18,34 @@
                 <div class="row h-10">
                     <div class="col-12 h-100">
                         <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Dropdown button
+                            <button class="btn btn-secondary dropdown-toggle w-75" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @Model.SelDep.Name
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
+                                @foreach (var department in Model.DepartmentList)
+                                {
+                                    <a class="dropdown-item" href="@Url.Action("Message", "Message", new {d = department.Id})">@department.Name</a>
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row  h-90">
                     <div class="col-12 h-100">
-                        <div  class="list-group mh-100" style="overflow-y: scroll;">
+                        <div class="list-group mh-100" style="overflow-y: scroll;">
+
+                            @foreach (var user in Model.StaffOfDepartment)
+                            {
+                                if (user.Id == @Context.Session.GetInt32("uid"))
+                                {
+                                    continue;
+                                }
+                                    <a href="#" onclick="javascript:chatWith(@user.Id)" class="list-group-item list-group-item-action">@user.FirstName&nbsp;@user.LastName</a>
+                                }
+
                             <a href="#" class="list-group-item list-group-item-action active">
                                 Cras justo odio
                             </a>
-                            <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-                            <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
-                            <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-                            <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
-                            <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-                            <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
-                            <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-                            <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
-                            <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-                            <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
-                            <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-                            <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
-                            <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
 
                         </div>
                     </div>
@@ -123,7 +124,7 @@
                 </div>
                 <div class="h-20 container row border p-3">
                     <div class="input-group">
-                        <textarea id="msg" type="text" class="form-control h-100" placeholder="Type to input..." style="resize:none;" ></textarea>
+                        <textarea id="msg" type="text" class="form-control h-100" placeholder="Type to input..." style="resize:none;"></textarea>
                         <div class="input-group-append" id="button-addon4">
                             <button id="sendBtn" class="btn btn-success" type="button">Send</button>
                         </div>
@@ -136,28 +137,34 @@
     </div>
 </div>
 @section Scripts{
-    <script>
+<script>
+        var to = 0;
+
+        $("#messageBox").animate({ scrollTop: $("#messageBox").height() }, 1000);
 
 
-    $("#messageBox").animate({ scrollTop: $("#messageBox").height() }, 1000);
-
-
-    $("#messageBox").delay(2000).scroll(function(){
-        if ($(this).scrollTop() < 20)
-        {
-            //alert('1');
-        }
-    });
-
-    $("#sendBtn").click(function()
-    {
-        var from = 1;
-        var to = 2;
-        var message = $("#msg").val();
-        connection.invoke("SendMessage", from, to, message).catch(function (err) {
-            return console.error(err.toString());
+        $("#messageBox").delay(2000).scroll(function(){
+            if ($(this).scrollTop() < 20)
+            {
+                //alert('1');
+            }
         });
-    });
-    
-    </script>
+
+        $("#sendBtn").click(function()
+        {
+            if (to == 0){return;}
+            var message = $("#msg").val();
+            connection.invoke("SendMessage", to, message).catch(function (err) {
+            return console.error(err.toString());
+            });
+        });
+
+        function chatWith(var uid)
+        {
+            to = uid;
+            
+        }
+
+        function fetchMsgHis(){}
+</script>
 }

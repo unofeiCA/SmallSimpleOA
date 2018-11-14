@@ -17,13 +17,8 @@ namespace SmallSimpleOA.Controllers
             List<Department> deps = DepartmentService.FindDepartment();
             List<Uzer> staffs = new List<Uzer>();
             int depId = 0;
-            if (d != null)
-            {
-                if (Int32.TryParse(d, out depId))
-                {
-                    staffs = UserService.FindUserByDepartment(depId);
-                }
-            }
+            Int32.TryParse(d, out depId);
+               
             Department selDep = null;
             foreach (Department department in deps)
             {
@@ -37,6 +32,8 @@ namespace SmallSimpleOA.Controllers
             {
                 selDep = deps[0];
             }
+            staffs = UserService.FindUserByDepartment(selDep.Id);
+
 
             MessageMessageViewModel messageMessageViewModel = new MessageMessageViewModel(deps, staffs, selDep); 
             return View(messageMessageViewModel);

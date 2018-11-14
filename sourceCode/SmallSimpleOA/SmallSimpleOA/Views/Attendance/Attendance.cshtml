@@ -1,0 +1,133 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model SmallSimpleOA.ViewModels.AttendanceAttendanceViewModel
+@using Microsoft.AspNetCore.Http
+
+<div class="container row h-100 mh-100 pb-2">
+    <div class="col-12 h-100">
+        <div class="row h-5 ">
+            <div class="col-12 h-100">
+                <h3 class="mb-0">Attendance</h3>
+            </div>
+        </div>
+        <div class="row h-95 pt-3">
+            <div class="col-3 container h-100">
+                <div class="row h-10">
+                    <div class="col-12 h-100">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle w-75" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @Model.SelDep.Name
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                @foreach (var department in Model.DepartmentList)
+                                {
+                                    <a class="dropdown-item" href="@Url.Action("Attendance", "Attendance", new {d = department.Id})">@department.Name</a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row  h-90">
+                    <div class="col-12 h-100">
+                        <div class="list-group mh-100" style="overflow-y: scroll;">
+
+                            @foreach (var user in Model.StaffOfDepartment)
+                            {
+
+                                    <a href="#" onclick="javascript:changeUser(@user.Id)" class="list-group-item list-group-item-action">@user.FirstName&nbsp;@user.LastName</a>
+                                }
+
+                            <a href="#" class="list-group-item list-group-item-action active">
+                                Cras justo odio
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-9 container h-100">
+                <div id='wrap'>
+                    <div id='calendar'></div>
+                    <div style='clear: both'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+<script>
+    var targetUserId = @Model.StaffOfDepartment.First().Id;
+    function changeUser(u)
+    {
+        targetUserId = u;
+    alert(targetUserId);
+        var c = $("#calendar").fullCalendar('getCalendar');
+        c.render();
+    }
+
+$("#calendar").fullCalendar(
+    {
+        @*header:
+        {
+            right: 'today prevYear,prev,next,nextYear'
+        },*@
+    events: [{title:'Clock in',start:"2018-11-01T08:05:25.967",end:'2018-11-01T08:05:25.967'},{title:'Clock in',start:'2018-11-02T08:08:51.147',end:'2018-11-02T08:08:51.147'},{title:'Clock in',start:'2018-11-03T09:00:44.187',end:'2018-11-03T09:00:44.187'},{title:'Clock in',start:'2018-11-04T09:02:21.263',end:'2018-11-04T09:02:21.263'},{title:'Clock in',start:'2018-11-05T08:08:51.147',end:'2018-11-05T08:08:51.147'},{title:'Clock in',start:'2018-11-06T09:00:44.187',end:'2018-11-06T09:00:44.187'},{title:'Clock in',start:'2018-11-07T09:02:21.263',end:'2018-11-07T09:02:21.263'},{title:'Clock in',start:'2018-11-08T08:08:51.147',end:'2018-11-08T08:08:51.147'},{title:'Clock in',start:'2018-11-09T09:00:44.187',end:'2018-11-09T09:00:44.187'},{title:'Clock in',start:'2018-11-10T09:02:21.263',end:'2018-11-10T09:02:21.263'},{title:'Clock out',start:'2018-11-01T17:05:25.967',end:'2018-11-01T17:05:25.967'},{title:'Clock out',start:'2018-11-02T17:08:51.147',end:'2018-11-02T17:08:51.147'},{title:'Clock out',start:'2018-11-03T18:00:44.187',end:'2018-11-03T18:00:44.187'},{title:'Clock out',start:'2018-11-04T17:02:21.263',end:'2018-11-04T17:02:21.263'},{title:'Clock out',start:'2018-11-05T18:08:51.147',end:'2018-11-05T18:08:51.147'},{title:'Clock out',start:'2018-11-06T19:00:44.187',end:'2018-11-06T19:00:44.187'},{title:'Clock out',start:'2018-11-07T20:02:21.263',end:'2018-11-07T20:02:21.263'},{title:'Clock out',start:'2018-11-08T17:08:51.147',end:'2018-11-08T17:08:51.147'},{title:'Clock out',start:'2018-11-09T18:00:44.187',end:'2018-11-09T18:00:44.187'},{title:'Clock out',start:'2018-11-10T17:02:21.263',end:'2018-11-10T17:02:21.263'}]
+    @*events: [{title:'Clock in',start:1541059525967,end:1541059525967},{title:'Clock in',start:1541146131147,end:1541146131147},{title:'Clock in',start:1541235644187,end:1541235644187},{title:'Clock in',start:1541322141263,end:1541322141263},{title:'Clock in',start:1541405331147,end:1541405331147},{title:'Clock in',start:1541494844187,end:1541494844187},{title:'Clock in',start:1541581341263,end:1541581341263},{title:'Clock in',start:1541664531147,end:1541664531147},{title:'Clock in',start:1541754044187,end:1541754044187},{title:'Clock in',start:1541840541263,end:1541840541263},{title:'Clock out',start:1541091925967,end:1541091925967},{title:'Clock out',start:1541178531147,end:1541178531147},{title:'Clock out',start:1541268044187,end:1541268044187},{title:'Clock out',start:1541350941263,end:1541350941263},{title:'Clock out',start:1541441331147,end:1541441331147},{title:'Clock out',start:1541530844187,end:1541530844187},{title:'Clock out',start:1541620941263,end:1541620941263},{title:'Clock out',start:1541696931147,end:1541696931147},{title:'Clock out',start:1541786444187,end:1541786444187},{title:'Clock out',start:1541869341263,end:1541869341263}]*@
+        @*eventSources:
+        [
+            {
+                url: '@Url.Action("GetHistory", "Attendance")',
+                type: 'POST',
+                data:{uid : targetUserId},
+                color: 'yellow',
+                textColor: 'black',
+                error: function() {
+                    alert('there was an error while fetching data!');
+                }
+            }
+
+        ]*@
+        @*customButtons: {
+            today: {
+                text: 'Today',
+                click: function() {
+                    $("#calendar").fullCalendar('today');
+                    var c = $("#calendar").fullCalendar('getCalendar');
+                    var m = c.moment();
+                }
+            },
+            prev: {
+                click: function() {
+                    $("#calendar").fullCalendar('prev');
+                    var c = $("#calendar").fullCalendar('getCalendar');
+                    var m = c.moment();
+                }
+            },
+            next: {
+                click: function() {
+                    $("#calendar").fullCalendar('next');
+                    var c = $("#calendar").fullCalendar('getCalendar');
+                    var m = c.moment();
+                }
+            },
+            prevYear: {
+                click: function() {
+                    $("#calendar").fullCalendar('prevYear');
+                    var c = $("#calendar").fullCalendar('getCalendar');
+                    var m = c.moment();
+                }
+            },
+            nextYear: {
+                click: function() {
+                    $("#calendar").fullCalendar('nextYear');
+                    var c = $("#calendar").fullCalendar('getCalendar');
+                    var m = c.moment();
+                }
+            }
+        }*@
+    });</script>
+}

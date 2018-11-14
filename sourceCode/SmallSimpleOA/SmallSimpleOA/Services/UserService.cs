@@ -18,6 +18,12 @@ namespace SmallSimpleOA.Services
 
         }
 
+        public static List<Uzer> FindUserByDepartmentAndUnderLevel(int depId, int level)
+        {
+            return new SmallSimpleOAContext().Uzer.Where(e => e.Department == depId && e.UzerLevel < level && e.Valid == true).ToList();
+
+        }
+
         public static Uzer FindUserByID(int uid)
         {
             return new SmallSimpleOAContext().Uzer.Single(e => e.Id == uid && e.Valid == true);

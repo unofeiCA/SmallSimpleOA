@@ -24,7 +24,7 @@ namespace SmallSimpleOA.Controllers
         [HttpPost]
         public IActionResult DoLogin(string email, string password)
         {
-            HttpContext.Session.SetInt32("uid", 1);
+            HttpContext.Session.SetInt32("uid", 2007);
             return RedirectToAction("Home", "Home");
 
             if (email == null || password == null)

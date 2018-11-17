@@ -46,40 +46,42 @@ namespace SmallSimpleOA.Controllers
                     attendanceJson += ",{";
                 }
 
-                //double timeStamp = ((DateTime)attendance.ActionTime).Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-                //timeStamp *= 1000;
+                double timeStamp = ((DateTime)attendance.ActionTime).Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+                timeStamp *= 1000;
                 
-                DateTime time = (DateTime)attendance.ActionTime;
-                string timeStamp = time.Year + "-";
-                timeStamp += time.Month < 10 ? "0" + time.Month : "" + time.Month;
-                timeStamp += "-";
-                timeStamp += time.Day < 10 ? "0" + time.Day : "" + time.Day;
-                timeStamp += "T";
-                timeStamp += time.Hour < 10 ? "0" + time.Hour : "" + time.Hour;
-                timeStamp += ":";
-                timeStamp += time.Minute < 10 ? "0" + time.Minute : "" + time.Minute;
-                timeStamp += ":";
-                timeStamp += time.Second < 10 ? "0" + time.Second : "" + time.Second;
-                timeStamp += ".";
-                if (time.Millisecond > 99)
-                {
-                    timeStamp += "" + time.Millisecond;
-                }
-                else if (time.Millisecond > 9 && time.Millisecond <= 99)
-                {
-                    timeStamp += "0" + time.Millisecond;
+                //DateTime time = (DateTime)attendance.ActionTime;
+                //string timeStamp = time.Year + "-";
+                //timeStamp += time.Month < 10 ? "0" + time.Month : "" + time.Month;
+                //timeStamp += "-";
+                //timeStamp += time.Day < 10 ? "0" + time.Day : "" + time.Day;
+                //timeStamp += "T";
+                //timeStamp += time.Hour < 10 ? "0" + time.Hour : "" + time.Hour;
+                //timeStamp += ":";
+                //timeStamp += time.Minute < 10 ? "0" + time.Minute : "" + time.Minute;
+                //timeStamp += ":";
+                //timeStamp += time.Second < 10 ? "0" + time.Second : "" + time.Second;
+                //timeStamp += ".";
+                //if (time.Millisecond > 99)
+                //{
+                //    timeStamp += "" + time.Millisecond;
+                //}
+                //else if (time.Millisecond > 9 && time.Millisecond <= 99)
+                //{
+                //    timeStamp += "0" + time.Millisecond;
 
-                }
-                else
-                {
-                    timeStamp += "00" + time.Millisecond;
+                //}
+                //else
+                //{
+                //    timeStamp += "00" + time.Millisecond;
 
-                }
+                //}
 
 
-                attendanceJson += "title:'" + (attendance.ActionType == (int)AttendanceType.In ? "Clock in" : "Clock out") + "',";
-                attendanceJson += "start:'" + timeStamp + "',";
-                attendanceJson += "end:'" + timeStamp + "'";
+                attendanceJson += "\"title\":\"" + (attendance.ActionType == (int)AttendanceType.In ? "Clock in" : "Clock out") + "\",";
+                attendanceJson += "\"start\":" + timeStamp + ",";
+                attendanceJson += "\"end\":" + timeStamp + "";
+                //attendanceJson += "\"start\":\"" + timeStamp + "\",";
+                //attendanceJson += "\"end\":\"" + timeStamp + "\"";
 
                 attendanceJson += "}";
             }

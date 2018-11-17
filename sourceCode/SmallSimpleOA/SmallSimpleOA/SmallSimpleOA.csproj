@@ -36,6 +36,7 @@
     <Folder Include="Hubs\" />
     <Folder Include="Views\Message\" />
     <Folder Include="wwwroot\lib\Popper\" />
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\lib\bootstrap\css\.DS_Store" />
@@ -53,6 +54,9 @@
     <Content Remove="wwwroot\lib\fullcalendar\css\fullcalendar.print.css" />
     <Content Remove="wwwroot\lib\fullcalendar\js\fullcalendar.js" />
     <Content Remove="wwwroot\lib\fullcalendar\LICENSE.txt" />
+    <Content Remove="wwwroot\lib\fontawesome\svgs\bars-solid.svg" />
+    <Content Remove="wwwroot\svg\bars-solid.svg" />
+    <Content Remove="wwwroot\images\menu.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\lib\jquery\dist\jquery-ui.custom.min.js" />

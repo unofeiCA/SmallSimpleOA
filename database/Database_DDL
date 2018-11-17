@@ -24,8 +24,8 @@ CREATE TABLE SmallSimpleOA.dbo.Attendance (
 	ID int NOT NULL IDENTITY(1,1),
 	Valid bit DEFAULT ((1)),
 	UzerID int,
-	ActionType bit,
 	ActionTime datetime(3),
+	ActionType int,
 	CONSTRAINT PK__Attendan__3214EC27CBC3C422 PRIMARY KEY (ID)
 ) go;
 

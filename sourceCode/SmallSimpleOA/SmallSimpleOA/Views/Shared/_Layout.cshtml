@@ -10,16 +10,30 @@
     <link rel="stylesheet" href="~/lib/jquery-ui-1.12.1/jquery-ui.structure.css" />
     <link rel="stylesheet" href="~/lib/jquery-ui-1.12.1/jquery-ui.theme.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/fontawesome-free-5.5.0-web/css/all.css" />
     <link rel="stylesheet" href="~/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" />
-    <link rel="stylesheet" href="~/lib/fontawesome/css/font-awesome.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/additionalCss.css" />
 
 </head>
 <body class="fill-h fill-w">
     <div id="messagePopBase" class="row fixed-top bg-dark h-50px pl-3 no-margin">
-        <div class="col-12 d-flex align-items-center ">
+        <div class="col-11 d-flex align-items-center ">
             <h2 class="text-white font-weight-bold font-italic">SmallSimpleOA</h2>
+        </div>
+        <div class="col-1 d-flex align-items-center">
+            <div class="dropdown">
+                <span id="dropdownMenuButton" style="color:white;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                    <i class="fas fa-bars"></i>
+                </span>
+                <div class="dropdown-menu " aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="@Url.Action("Attendance", "Attendance")">Clock In</a>
+                    <a class="dropdown-item" href="@Url.Action("Attendance", "Attendance")">Clock Out</a>
+                    <a class="dropdown-item" href="@Url.Action("SignOut", "Login")">Sign Out</a>
+
+                </div>
+            </div>
         </div>
     </div>
 

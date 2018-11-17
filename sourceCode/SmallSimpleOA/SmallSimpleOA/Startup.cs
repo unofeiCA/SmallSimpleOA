@@ -80,7 +80,7 @@ namespace SmallSimpleOA
                 routes.MapHub<MessageHub>("/Message/MessageHub");
             });
 
-           
+
         }
 
 

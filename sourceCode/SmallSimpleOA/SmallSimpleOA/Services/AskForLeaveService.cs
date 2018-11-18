@@ -11,11 +11,19 @@ namespace SmallSimpleOA.Services
         {
         }
 
-        public static List<AskForLeave> FindAskForLeaveByApplicant(int uid)
+        public static int FindCountByApplicant(int uid)
         {
 
             SmallSimpleOAContext ctx = new SmallSimpleOAContext();
-            return ctx.AskForLeave.Where(a => a.Applicant.Equals(uid) && a.Valid == true).ToList();
+            return ctx.AskForLeave.Count(a => a.Applicant.Equals(uid) && a.Valid == true);
+
+        }
+
+        public static List<AskForLeave> FindAskForLeaveByApplicantAndPageAndPagesize(int uid, int page, int size)
+        {
+
+            SmallSimpleOAContext ctx = new SmallSimpleOAContext();
+            return ctx.AskForLeave.Where(a => a.Applicant.Equals(uid) && a.Valid == true).Skip((page - 1) * size).Take(size).OrderByDescending(a => a.AppTime).ToList();
 
         }
 

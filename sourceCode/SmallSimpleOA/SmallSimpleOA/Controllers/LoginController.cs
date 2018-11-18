@@ -59,7 +59,7 @@ namespace SmallSimpleOA.Controllers
         {
             HttpContext.Session.Remove("uid");
 
-            return RedirectToAction("Lognin", "Login");
+            return RedirectToAction("Login", "Login");
         }
 
     }

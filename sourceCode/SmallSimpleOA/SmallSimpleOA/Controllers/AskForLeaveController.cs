@@ -7,7 +7,7 @@ using SmallSimpleOA.ViewModels;
 using SmallSimpleOA.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
-
+using SmallSimpleOA.Models;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace SmallSimpleOA.Controllers
@@ -15,8 +15,26 @@ namespace SmallSimpleOA.Controllers
     public class AskForLeaveController : Controller
     {
         // GET: /<controller>/
-        public IActionResult List()
+        public IActionResult List(string p)
         {
+            const int PAGE_SIZE = 10;
+            int? uid = HttpContext.Session.GetInt32("uid");
+            if (uid == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            int page;
+            if (!Int32.TryParse(p, out page))
+            {
+                page = 1;
+            }
+
+            int count = AskForLeaveService.FindCountByApplicant((int)uid);
+            int pages = count % PAGE_SIZE == 0 ? count / PAGE_SIZE : count / PAGE_SIZE + 1;
+
+            List<AskForLeave> asks = AskForLeaveService.FindAskForLeaveByApplicantAndPageAndPagesize((int)uid, page, PAGE_SIZE);
+
+            AskForLeaveListViewModel askForLeaveListViewModel = new AskForLeaveListViewModel(asks, pages, page);
             return View();
         }
 

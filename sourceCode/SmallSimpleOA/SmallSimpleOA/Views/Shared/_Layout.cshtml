@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html class="fill-h fill-w">
+<html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="~/css/additionalCss.css" />
 
 </head>
-<body class="fill-h fill-w">
+<body>
     <div id="messagePopBase" class="row fixed-top bg-dark h-50px pl-3 no-margin">
         <div class="col-11 d-flex align-items-center ">
             <h2 class="text-white font-weight-bold font-italic">SmallSimpleOA</h2>
@@ -25,11 +25,11 @@
             <div class="dropdown">
                 <span id="dropdownMenuButton" style="color:white;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                    <i class="fas fa-bars"></i>
+                    <i id="menuIcon" class="fas fa-bars"></i>
                 </span>
                 <div class="dropdown-menu " aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="@Url.Action("Attendance", "Attendance")">Clock In</a>
-                    <a class="dropdown-item" href="@Url.Action("Attendance", "Attendance")">Clock Out</a>
+                    <a class="dropdown-item" href="#" id="clockIn">Clock In</a>
+                    <a class="dropdown-item" href="#" id="clockOut">Clock Out</a>
                     <a class="dropdown-item" href="@Url.Action("SignOut", "Login")">Sign Out</a>
 
                 </div>
@@ -38,8 +38,8 @@
     </div>
 
 
-    <div class="container-fluid p-0 fill-h">
-        <div class="row fill-h ">
+    <div class="container-fluid fill-h">
+        <div class="row fill-h" >
 
             <div class="col-2 bg-dark">
                 <nav class="nav flex-column ">
@@ -93,6 +93,63 @@
 
 
     <script>
+
+        $('#clockOut').click(function()
+        {
+
+            $.ajax({
+                    type: "POST",
+                    data: {actionType : "2", by : "ajax"},
+                    url: "@Url.Action("DoClock", "Attendance")",
+                    dataType: 'text',
+                    success: function (response) {
+                        if (response != "0")
+                        {
+                            alert(response);
+                        }
+                        else
+                        {
+
+                            $('#menuIcon').switchClass('fa-bars','fa-check', 0).delay(2000).switchClass('fa-check','fa-bars', 0);
+    
+                        }
+                    },
+                    error: function (response) {
+                        alert("Some unknown error occured, please try it again later.");
+                    }
+
+                });
+        });
+
+        $('#clockIn').click(function()
+        {
+
+            $.ajax({
+                    type: "POST",
+                    data: {actionType : "1", by : "ajax"},
+                    url: "@Url.Action("DoClock", "Attendance")",
+                    dataType: 'text',
+                    success: function (response) {
+                        if (response != "0")
+                        {
+                            alert(response);
+                        }
+                        else
+                        {
+
+                            $('#menuIcon').switchClass('fa-bars','fa-check', 0).delay(2000).switchClass('fa-check','fa-bars', 0);
+    
+                        }
+                    },
+                    error: function (response) {
+                        alert("Some unknown error occured, please try it again later.");
+                    }
+
+                });
+        });
+
+
+
 
          $("#messagePop").position({
                 my: "right top",

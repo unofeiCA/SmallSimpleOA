@@ -11,13 +11,7 @@ namespace SmallSimpleOA.Controllers
 {
     public class LoginController : Controller
     {
-
-        //private readonly SmallSimpleOAContext _context;
-
-        //public LoginController(SmallSimpleOAContext context)
-        //{
-        //    _context = context;
-        //}
+   
         public LoginController(){}
 
 
@@ -61,7 +55,12 @@ namespace SmallSimpleOA.Controllers
             return View();
         }
 
+        public IActionResult SignOut()
+        {
+            HttpContext.Session.Remove("uid");
 
+            return RedirectToAction("Lognin", "Login");
+        }
 
     }
 }

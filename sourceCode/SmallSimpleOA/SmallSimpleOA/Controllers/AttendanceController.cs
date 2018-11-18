@@ -202,7 +202,7 @@ namespace SmallSimpleOA.Controllers
                 else
                 {
                     DateTime t = DateTime.Now;
-                    List<Attendance> clockOuts = AttendanceService.FindAttendanceByUserAndDateAndType((int)uid, t, AttendanceType.In);
+                    List<Attendance> clockOuts = AttendanceService.FindAttendanceByUserAndDateAndType((int)uid, t, AttendanceType.Out);
                     if (clockOuts.Count > 0)
                     {
                         Attendance clkOut = clockOuts[clockOuts.Count - 1];

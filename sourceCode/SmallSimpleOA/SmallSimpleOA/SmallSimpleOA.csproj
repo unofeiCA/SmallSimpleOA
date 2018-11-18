@@ -26,9 +26,6 @@
     <Folder Include="wwwroot\lib\tempusdominus\" />
     <Folder Include="wwwroot\lib\tempusdominus\js\" />
     <Folder Include="wwwroot\lib\tempusdominus\css\" />
-    <Folder Include="wwwroot\lib\fontawesome\" />
-    <Folder Include="wwwroot\lib\fontawesome\css\" />
-    <Folder Include="wwwroot\lib\fontawesome\fonts\" />
     <Folder Include="Views\StaffManage\" />
     <Folder Include="ViewModels\" />
     <Folder Include="Services\" />
@@ -57,16 +54,10 @@
     <Content Remove="wwwroot\lib\fontawesome\svgs\bars-solid.svg" />
     <Content Remove="wwwroot\svg\bars-solid.svg" />
     <Content Remove="wwwroot\images\menu.png" />
+    <Content Remove="wwwroot\lib\fontawesome\.DS_Store" />
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\lib\jquery\dist\jquery-ui.custom.min.js" />
-    <None Include="wwwroot\lib\fontawesome\css\font-awesome.css" />
-    <None Include="wwwroot\lib\fontawesome\fonts\fontawesome-webfont.eot" />
-    <None Include="wwwroot\lib\fontawesome\fonts\fontawesome-webfont.svg" />
-    <None Include="wwwroot\lib\fontawesome\fonts\fontawesome-webfont.ttf" />
-    <None Include="wwwroot\lib\fontawesome\fonts\fontawesome-webfont.woff" />
-    <None Include="wwwroot\lib\fontawesome\fonts\fontawesome-webfont.woff2" />
-    <None Include="wwwroot\lib\fontawesome\fonts\FontAwesome.otf" />
     <None Include="wwwroot\lib\moment\js\moment.min.js" />
     <None Include="wwwroot\lib\fullcalendar\css\fullcalendar.css" />
     <None Include="wwwroot\lib\fullcalendar\css\fullcalendar.print.css" />

@@ -82,9 +82,10 @@
     </div>
 
 </div>
+
 @if (@Model.NeedClockIn)
 {
-    <div id="signPop" class="card text-white bg-info mb-3" style="max-width: 18rem;">
+    <div id="signPop" class="card text-white bg-info mb-3" style="max-width: 18rem; z-index:500;">
         <div class="card-header">You Have NOT Clocked In Today! Clock In Now?</div>
         <div class="card-body row">
             <div class="col-auto">
@@ -106,9 +107,9 @@
         <script>
 
             $("#signPop").position({
-                my: "right bottom",
-                at: "right-15 bottom-15",
-                of: "#signPopBase"
+                my: "right top",
+                at: "right-15 bottom+15",
+                of: "#messagePopBase"
             });
 
             function clockIn()

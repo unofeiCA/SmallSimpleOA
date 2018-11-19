@@ -32,10 +32,20 @@ namespace SmallSimpleOA.Controllers
             int count = AskForLeaveService.FindCountByApplicant((int)uid);
             int pages = count % PAGE_SIZE == 0 ? count / PAGE_SIZE : count / PAGE_SIZE + 1;
 
+            if (page > pages)
+            {
+                page = pages;
+            }
+
+            if (page <= 0)
+            {
+                page = 1;
+            }
+
             List<AskForLeave> asks = AskForLeaveService.FindAskForLeaveByApplicantAndPageAndPagesize((int)uid, page, PAGE_SIZE);
 
             AskForLeaveListViewModel askForLeaveListViewModel = new AskForLeaveListViewModel(asks, pages, page);
-            return View();
+            return View(askForLeaveListViewModel);
         }
 
         public IActionResult New(string r)
@@ -61,10 +71,6 @@ namespace SmallSimpleOA.Controllers
 
         }
 
-        public IActionResult Detail()
-        {
-            return View();
-        }
 
         [HttpPost]
         public IActionResult DoNew(string startTime, string endTime, string reason, string memo)
@@ -100,6 +106,24 @@ namespace SmallSimpleOA.Controllers
             AskForLeaveService.AddAskForLeave((int)uid, st, et, DateTime.Now, reason, memo);
 
             return RedirectToAction("New", "AskForLeave", new { r = result });
+        }
+
+        public IActionResult Detail(string id)
+        {
+            int? uid = HttpContext.Session.GetInt32("uid");
+            if (uid == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            int i;
+            if (null == id || !Int32.TryParse(id, out i))
+            {
+                return RedirectToAction("List", "AskForLeave");
+            }
+
+            AskForLeave ask = AskForLeaveService.FindAskForLeaveById(i);
+            AskForLeaveDetailViewModel model = new AskForLeaveDetailViewModel(ask);
+            return View(model);
         }
     }
 }

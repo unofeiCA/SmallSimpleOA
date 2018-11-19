@@ -3,64 +3,48 @@
 *@
 @{
 }
-<form>
+@model SmallSimpleOA.ViewModels.AskForLeaveDetailViewModel;
+    <div class="row container">
+        <div class="col-12">
+            <h3 class="float-left">Ask For Leave</h3>
+        </div>
+    </div>
     <div class="container row ">
         <div class="col-12 container">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">From</span>
                 </div>
-                <input type="text" id="dtpFrom" class="form-control datetimepicker-input" data-toggle="datetimepicker" data-target="#dtpFrom">
+                <input type="text"  class="form-control datetimepicker-input" value="@Model.AskForLeave.StartTime" readonly="readonly">
                 <div class="input-group-prepend">
                     <span class="input-group-text">To</span>
                 </div>
-                <input type="text" id="dtpTo" class="form-control datetimepicker-input" data-toggle="datetimepicker" data-target="#dtpTo">
+                <input type="text" class="form-control datetimepicker-input" value="@Model.AskForLeave.EndTime" readonly="readonly">
             </div>
         </div>
     </div>
-    <div class="container" row>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroup-sizing-default">Reason</span>
+    <div class="container row">
+        <div class="col-12 container">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Reason</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="@Model.AskForLeave.Reason" readonly="readonly">
             </div>
-            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
         </div>
     </div>
     <div class="container row ">
         <div class="col-12 container">
             Memo
-            <textarea class="form-control rounded-0" style="resize:none;" id="exampleFormControlTextarea1" rows="10"></textarea>
+            <textarea class="form-control rounded-0" style="resize: none;" rows="10" readonly="readonly">@Model.AskForLeave.Memo</textarea>
         </div>
     </div>
+    <br />
     <div class="container row ">
-        <div class="col-8">
-        </div>
-        <div class="col-4">
-            <div class="row">
-                <div class="col-6">
-                </div>
-                <div class="col-3 container">
-                    <button type="button" class="btn btn-info">BACK</button>
-                </div>
-                <div class="col-3 container">
-                    <button type="button" class="btn btn-success">SUBMIT</button>
-                </div>
+        <div class="col-12 ">
+            <div class="pl-2  float-right">
+                <button type="button" class="btn btn-info" onclick="javascript:history.go(-1); return false;">BACK</button>
             </div>
+
         </div>
     </div>
-</form>
-@section Scripts{
-    <script type="text/javascript">$(function () {
-        $('#dtpFrom').datetimepicker();
-        $('#dtpTo').datetimepicker({
-             useCurrent: false
-         });
-     });
-
-    $("#dtpFrom").on("change.datetimepicker", function (e) {
-            $('#dtpTo').datetimepicker('minDate', e.date);
-        });
-        $("#dtpTo").on("change.datetimepicker", function (e) {
-            $('#dtpFrom').datetimepicker('maxDate', e.date);
-        });</script>
-}

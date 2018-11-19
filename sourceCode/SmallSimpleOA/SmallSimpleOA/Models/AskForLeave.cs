@@ -18,7 +18,7 @@ namespace SmallSimpleOA.Models
 
     }
 
-    enum AskForLeaveStatus
+    public enum AskForLeaveStatus
     {
         Applied = 1,
         Reviewing = 2,

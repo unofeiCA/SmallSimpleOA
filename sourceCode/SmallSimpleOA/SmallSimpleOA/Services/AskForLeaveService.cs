@@ -11,6 +11,12 @@ namespace SmallSimpleOA.Services
         {
         }
 
+        public static AskForLeave FindAskForLeaveById(int id)
+        {
+            SmallSimpleOAContext ctx = new SmallSimpleOAContext();
+            return ctx.AskForLeave.Single(a => a.Id.Equals(id) && a.Valid == true);
+        }
+
         public static int FindCountByApplicant(int uid)
         {
 

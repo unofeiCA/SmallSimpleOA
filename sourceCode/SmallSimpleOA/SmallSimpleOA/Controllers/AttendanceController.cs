@@ -165,7 +165,6 @@ namespace SmallSimpleOA.Controllers
         [HttpPost]
         public IActionResult DoClock(string actionType, string by = "ajax")
         {
-
             int? uid = HttpContext.Session.GetInt32("uid");
             if (uid == null)
             {

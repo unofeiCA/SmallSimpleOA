@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using SmallSimpleOA.Models;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 namespace SmallSimpleOA.Models
 {
     public partial class Uzer
     {
+
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity), Key]
         public int Id { get; set; }
         public bool? Valid { get; set; } = true;
         public string LastName { get; set; }
@@ -15,5 +19,11 @@ namespace SmallSimpleOA.Models
         public string Password { get; set; }
         public string Salt { get; set; }
         public DateTime? LastLogin { get; set; }
+
+        [InverseProperty("Applicant")]
+        public virtual List<AskForLeave> AskForLeaves { get; set; }
+
+        [InverseProperty("CurrentAt")]
+        public ICollection<AskForLeave> LeaveRequests { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -43,11 +45,18 @@
 
             <div class="col-2 bg-dark">
                 <nav class="nav flex-column ">
-                    <a class="nav-link active text-white" asp-controller="Home" asp-action="Home">Home</a>
-                    <a class="nav-link text-white" asp-controller="Message" asp-action="Message">Message</a>
-                    <a class="nav-link text-white" asp-controller="Attendance" asp-action="Attendance">Attendance</a>
-                    <a class="nav-link text-white" asp-controller="AskForLeave" asp-action="List">Ask for Leave</a>
-                    <a class="nav-link disabled text-white" asp-controller="StaffManage" asp-action="New">Add New Staff</a>
+                    @if (@Context.Session.GetInt32("uid") == -1)
+                    {
+                        <a class="nav-link disabled text-white" asp-controller="StaffManage" asp-action="New">Add New Staff</a>
+                    }
+                    else
+                    {
+                        <a class="nav-link active text-white" asp-controller="Home" asp-action="Home">Home</a>
+                        <a class="nav-link text-white" asp-controller="Message" asp-action="Message">Message</a>
+                        <a class="nav-link text-white" asp-controller="Attendance" asp-action="Attendance">Attendance</a>
+                        <a class="nav-link text-white" asp-controller="AskForLeave" asp-action="List">Ask for Leave</a>
+                    }
+
                 </nav>
             </div>
 

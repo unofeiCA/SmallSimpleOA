@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-
 namespace SmallSimpleOA.Models
 {
     public partial class SmallSimpleOAContext : DbContext
@@ -42,7 +41,10 @@ namespace SmallSimpleOA.Models
                 entity.Property(e => e.Reason).HasColumnType("text");
 
                 entity.Property(e => e.Valid).HasDefaultValueSql("((1))");
+
             });
+          //  modelBuilder.Entity<AskForLeave>().HasOne(p => p.Applicant).WithMany(u => u.AskForLeaves).HasForeignKey(p => p.ApplicantId);
+         //   modelBuilder.Entity<AskForLeave>().HasOne(p => p.CurrentAt).WithMany(u => u.LeaveRequests).HasForeignKey(p => p.CurrentAtId);
 
             modelBuilder.Entity<Attendance>(entity =>
             {
@@ -122,6 +124,9 @@ namespace SmallSimpleOA.Models
 
                 entity.Property(e => e.Valid).HasDefaultValueSql("((1))");
             });
+          //  modelBuilder.Entity<Uzer>().HasMany(u => u.AskForLeaves).WithOne();
+          //  modelBuilder.Entity<Uzer>().HasMany(u => u.LeaveRequests).WithOne();
+
         }
     }
 }

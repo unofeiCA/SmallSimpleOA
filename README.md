@@ -14,7 +14,7 @@ With our test data we have other users listed as below and the password are thei
 
 Finance department:
     nancy@ssoa.ca
-    carrow@ssoa.ca
+    carrol@ssoa.ca
     cherry@ssoa.ca
     jason@ssoa.ca
     clark@ssoa.ca

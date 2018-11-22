@@ -103,7 +103,9 @@ namespace SmallSimpleOA.Controllers
 
             }
 
-            AskForLeaveService.AddAskForLeave((int)uid, st, et, DateTime.Now, reason, memo);
+            Uzer u = UserService.FindUserByID((int)uid);
+
+            AskForLeaveService.AddAskForLeave(u, st, et, DateTime.Now, reason, memo);
 
             return RedirectToAction("New", "AskForLeave", new { r = result });
         }
@@ -125,5 +127,11 @@ namespace SmallSimpleOA.Controllers
             AskForLeaveDetailViewModel model = new AskForLeaveDetailViewModel(ask);
             return View(model);
         }
+
+        public IActionResult DoAction(string id, string act)
+        {
+            return View();
+        }
+
     }
 }

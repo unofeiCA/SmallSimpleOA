@@ -3,48 +3,68 @@
 *@
 @{
 }
+@using Microsoft.AspNetCore.Http
 @model SmallSimpleOA.ViewModels.AskForLeaveDetailViewModel;
-    <div class="row container">
-        <div class="col-12">
-            <h3 class="float-left">Ask For Leave</h3>
-        </div>
+<div class="row container">
+    <div class="col-12">
+        <h3 class="float-left">Ask For Leave</h3>
     </div>
-    <div class="container row ">
-        <div class="col-12 container">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">From</span>
-                </div>
-                <input type="text"  class="form-control datetimepicker-input" value="@Model.AskForLeave.StartTime" readonly="readonly">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">To</span>
-                </div>
-                <input type="text" class="form-control datetimepicker-input" value="@Model.AskForLeave.EndTime" readonly="readonly">
+</div>
+<div class="container row ">
+    <div class="col-12 container">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Name</span>
             </div>
-        </div>
-    </div>
-    <div class="container row">
-        <div class="col-12 container">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-default">Reason</span>
-                </div>
-                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="@Model.AskForLeave.Reason" readonly="readonly">
-            </div>
-        </div>
-    </div>
-    <div class="container row ">
-        <div class="col-12 container">
-            Memo
-            <textarea class="form-control rounded-0" style="resize: none;" rows="10" readonly="readonly">@Model.AskForLeave.Memo</textarea>
-        </div>
-    </div>
-    <br />
-    <div class="container row ">
-        <div class="col-12 ">
-            <div class="pl-2  float-right">
-                <button type="button" class="btn btn-info" onclick="javascript:history.go(-1); return false;">BACK</button>
-            </div>
+            @*<input type="text" class="form-control datetimepicker-input" value="@Model.AskForLeave.Owner.FirstName @Model.AskForLeave.Owner.LastName" readonly="readonly">*@
 
         </div>
     </div>
+</div>
+<div class="container row ">
+    <div class="col-12 container">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">From</span>
+            </div>
+            <input type="text" class="form-control datetimepicker-input" value="@Model.AskForLeave.StartTime" readonly="readonly">
+            <div class="input-group-prepend">
+                <span class="input-group-text">To</span>
+            </div>
+            <input type="text" class="form-control datetimepicker-input" value="@Model.AskForLeave.EndTime" readonly="readonly">
+        </div>
+    </div>
+</div>
+<div class="container row">
+    <div class="col-12 container">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Reason</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="@Model.AskForLeave.Reason" readonly="readonly">
+        </div>
+    </div>
+</div>
+<div class="container row ">
+    <div class="col-12 container">
+        Memo
+        <textarea class="form-control rounded-0" style="resize: none;" rows="10" readonly="readonly">@Model.AskForLeave.Memo</textarea>
+    </div>
+</div>
+<br />
+<div class="container row ">
+    <div class="col-12 ">
+        @if (@Context.Session.GetInt32("uid") == Model.AskForLeave.CurrentAt.Id)
+        {
+            <div class="pl-2  float-right">
+                <button type="button" class="btn btn-info" onclick="javascript:history.go(-1); return false;">APPROVE</button>
+            </div>
+            <div class="pl-2  float-right">
+                <button type="button" class="btn btn-info" onclick="javascript:history.go(-1); return false;">REJECT</button>
+            </div>
+        }
+        <div class="pl-2  float-right">
+            <button type="button" class="btn btn-info" onclick="javascript:history.go(-1); return false;">BACK</button>
+        </div>
+    </div>
+</div>

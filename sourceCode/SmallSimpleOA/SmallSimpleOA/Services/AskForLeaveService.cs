@@ -17,6 +17,14 @@ namespace SmallSimpleOA.Services
             return ctx.AskForLeave.Single(a => a.Id.Equals(id) && a.Valid == true);
         }
 
+        public static int FindCountByCurrentAt(int uid)
+        {
+
+            SmallSimpleOAContext ctx = new SmallSimpleOAContext();
+            return ctx.AskForLeave.Count(a => a.CurrentAt.Equals(uid) && a.Valid == true);
+
+        }
+
         public static int FindCountByApplicant(int uid)
         {
 
@@ -33,6 +41,15 @@ namespace SmallSimpleOA.Services
 
         }
 
+        public static List<AskForLeave> FindAskForLeaveByCurrentAtAndPageAndPagesize(int uid, int page, int size)
+        {
+
+            SmallSimpleOAContext ctx = new SmallSimpleOAContext();
+            return ctx.AskForLeave.Where(a => a.CurrentAt.Id.Equals(uid) && a.Valid == true).Skip((page - 1) * size).Take(size).OrderByDescending(a => a.AppTime).ToList();
+
+        }
+
+
         public static List<AskForLeave> FindAskForLeaveByCurrentAt(int uid)
         {
 
@@ -48,7 +65,7 @@ namespace SmallSimpleOA.Services
             ctx.SaveChanges();
         }
 
-        public static void AddAskForLeave(int applicant, DateTime startTime, DateTime endTime, DateTime appTime, string reason, string memo)
+        public static void AddAskForLeave(Uzer applicant, DateTime startTime, DateTime endTime, DateTime appTime, string reason, string memo)
         {
             AskForLeave afl = new AskForLeave();
             afl.Valid = true;
@@ -60,16 +77,17 @@ namespace SmallSimpleOA.Services
             afl.Memo = memo;
             afl.Status = (int)AskForLeaveStatus.Applied;
 
-            Uzer u = UserService.FindSupervisorByUid(applicant);
+            Uzer u = UserService.FindSupervisorByUid(applicant.Id);
             if (u == null)
             {
                 afl.Status = (int)AskForLeaveStatus.Approved;
                 afl.CurrentAt = applicant;
-
+                applicant.AskForLeaves.Add(afl);
             }
             else
             {
-                afl.CurrentAt = u.Id;
+                afl.CurrentAt = u;
+                u.LeaveRequests.Add(afl);
             }
 
             SmallSimpleOAContext ctx = new SmallSimpleOAContext();

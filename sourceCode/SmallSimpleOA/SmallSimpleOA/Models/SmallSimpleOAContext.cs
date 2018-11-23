@@ -7,6 +7,7 @@ namespace SmallSimpleOA.Models
     {
         public SmallSimpleOAContext()
         {
+            
         }
 
         public SmallSimpleOAContext(DbContextOptions<SmallSimpleOAContext> options)
@@ -23,10 +24,11 @@ namespace SmallSimpleOA.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=localhost,1433;Database=SmallSimpleOA;User ID=sa;Password=SSOAPassw0rd;");
+                optionsBuilder.UseLazyLoadingProxies().UseSqlServer("Server=localhost,1433;Database=SmallSimpleOA;User ID=sa;Password=SSOAPassw0rd;");
             }
         }
 
@@ -98,7 +100,7 @@ namespace SmallSimpleOA.Models
 
             modelBuilder.Entity<Uzer>(entity =>
             {
-                entity.Property(e => e.Id).HasColumnName("ID");
+                entity.Property(e => e.Id).HasColumnName("ID").ValueGeneratedOnAddOrUpdate();
 
                 entity.Property(e => e.Email)
                     .HasMaxLength(255)

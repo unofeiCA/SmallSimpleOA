@@ -70,12 +70,18 @@ namespace SmallSimpleOA.Services
             AskForLeave afl = new AskForLeave();
             afl.Valid = true;
             afl.Applicant = applicant;
+            applicant.AskForLeaves.Add(afl);
             afl.StartTime = startTime;
             afl.EndTime = endTime;
             afl.AppTime = appTime;
             afl.Reason = reason;
             afl.Memo = memo;
             afl.Status = (int)AskForLeaveStatus.Applied;
+
+            SmallSimpleOAContext ctx = new SmallSimpleOAContext();
+            ctx.Add(afl);
+            ctx.SaveChanges();
+
 
             Uzer u = UserService.FindSupervisorByUid(applicant.Id);
             if (u == null)
@@ -89,10 +95,9 @@ namespace SmallSimpleOA.Services
                 afl.CurrentAt = u;
                 u.LeaveRequests.Add(afl);
             }
-
-            SmallSimpleOAContext ctx = new SmallSimpleOAContext();
-            ctx.Add(afl);
+            ctx.Update(afl);
             ctx.SaveChanges();
+
         }
 
     }

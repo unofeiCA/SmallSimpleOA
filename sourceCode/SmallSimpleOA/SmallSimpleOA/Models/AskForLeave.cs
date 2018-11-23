@@ -25,10 +25,10 @@ namespace SmallSimpleOA.Models
         public DateTime? EndTime { get; set; }
 
         [ForeignKey("ApplicantId")]
-        public Uzer Applicant { get; set; }
+        public virtual Uzer Applicant { get; set; }
 
         [ForeignKey("CurrentAtId")]
-        public Uzer CurrentAt { get; set; }
+        public virtual Uzer CurrentAt { get; set; }
     }
 
     public enum AskForLeaveStatus

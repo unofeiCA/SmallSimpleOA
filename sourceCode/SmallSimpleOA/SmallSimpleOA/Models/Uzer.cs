@@ -21,9 +21,9 @@ namespace SmallSimpleOA.Models
         public DateTime? LastLogin { get; set; }
 
         [InverseProperty("Applicant")]
-        public virtual List<AskForLeave> AskForLeaves { get; set; }
+        public virtual ICollection<AskForLeave> AskForLeaves { get; set; }
 
         [InverseProperty("CurrentAt")]
-        public ICollection<AskForLeave> LeaveRequests { get; set; }
+        public virtual ICollection<AskForLeave> LeaveRequests { get; set; }
     }
 }

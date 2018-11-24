@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using SmallSimpleOA.Models;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace SmallSimpleOA.Services
 {
@@ -21,7 +22,7 @@ namespace SmallSimpleOA.Services
         {
 
             SmallSimpleOAContext ctx = new SmallSimpleOAContext();
-            return ctx.AskForLeave.Count(a => a.CurrentAt.Equals(uid) && a.Valid == true);
+            return ctx.AskForLeave.Count(a => a.CurrentAtId.Equals(uid) && a.Valid == true);
 
         }
 
@@ -45,7 +46,7 @@ namespace SmallSimpleOA.Services
         {
 
             SmallSimpleOAContext ctx = new SmallSimpleOAContext();
-            return ctx.AskForLeave.Where(a => a.CurrentAt.Id.Equals(uid) && a.Valid == true).Skip((page - 1) * size).Take(size).OrderByDescending(a => a.AppTime).ToList();
+            return ctx.AskForLeave.Where(a => a.CurrentAtId.Equals(uid) && a.Valid == true).Skip((page - 1) * size).Take(size).OrderByDescending(a => a.AppTime).ToList();
 
         }
 
@@ -54,7 +55,7 @@ namespace SmallSimpleOA.Services
         {
 
             SmallSimpleOAContext ctx = new SmallSimpleOAContext();
-            return ctx.AskForLeave.Where(a => a.CurrentAt.Equals(uid) && a.Valid == true).ToList();
+            return ctx.AskForLeave.Where(a => a.CurrentAtId.Equals(uid) && a.Valid == true).ToList();
 
         }
 
@@ -65,39 +66,29 @@ namespace SmallSimpleOA.Services
             ctx.SaveChanges();
         }
 
-        public static void AddAskForLeave(Uzer applicant, DateTime startTime, DateTime endTime, DateTime appTime, string reason, string memo)
+        public static AskForLeave AddAskForLeave(int uid, DateTime startTime, DateTime endTime, DateTime appTime, string reason, string memo)
         {
             AskForLeave afl = new AskForLeave();
             afl.Valid = true;
-            afl.Applicant = applicant;
-            applicant.AskForLeaves.Add(afl);
             afl.StartTime = startTime;
             afl.EndTime = endTime;
             afl.AppTime = appTime;
             afl.Reason = reason;
             afl.Memo = memo;
             afl.Status = (int)AskForLeaveStatus.Applied;
+            afl.ApplicantId = uid;
+
+            //           applicant.AskForLeaves.Add(afl);
+            //           ctx.Update(afl);
+
+
+
+            //ctx.Update(afl);
 
             SmallSimpleOAContext ctx = new SmallSimpleOAContext();
             ctx.Add(afl);
             ctx.SaveChanges();
-
-
-            Uzer u = UserService.FindSupervisorByUid(applicant.Id);
-            if (u == null)
-            {
-                afl.Status = (int)AskForLeaveStatus.Approved;
-                afl.CurrentAt = applicant;
-                applicant.AskForLeaves.Add(afl);
-            }
-            else
-            {
-                afl.CurrentAt = u;
-                u.LeaveRequests.Add(afl);
-            }
-            ctx.Update(afl);
-            ctx.SaveChanges();
-
+            return afl;
         }
 
     }

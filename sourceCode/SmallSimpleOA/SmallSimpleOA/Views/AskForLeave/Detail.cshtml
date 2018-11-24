@@ -16,7 +16,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">Name</span>
             </div>
-            @*<input type="text" class="form-control datetimepicker-input" value="@Model.AskForLeave.Owner.FirstName @Model.AskForLeave.Owner.LastName" readonly="readonly">*@
+            <input type="text" class="form-control datetimepicker-input" value="@Model.AskForLeave.Applicant.FirstName @Model.AskForLeave.Applicant.LastName" readonly="readonly">
 
         </div>
     </div>
@@ -51,16 +51,48 @@
         <textarea class="form-control rounded-0" style="resize: none;" rows="10" readonly="readonly">@Model.AskForLeave.Memo</textarea>
     </div>
 </div>
+
+@if (@Context.Session.GetInt32("uid") == Model.AskForLeave.ApplicantId)
+{
+    if (Model.AskForLeave.Status == (int)AskForLeaveStatus.Applied || Model.AskForLeave.Status == (int)AskForLeaveStatus.Reviewing)
+    {
+        <br />
+        <div class="container row ">
+            <div class="col-12 container">
+                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="Your request is at @Model.AskForLeave.CurrentAt.FirstName @Model.AskForLeave.CurrentAt.LastName" readonly="readonly">
+            </div>
+        </div>
+    }
+    else if (Model.AskForLeave.Status == (int)AskForLeaveStatus.Approved)
+    {
+        <br />
+        <div class="container row ">
+            <div class="col-12 container">
+                <input type="text" class="form-control text-success" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="Your request is approved." readonly="readonly">
+            </div>
+        </div>
+    }
+    else if (Model.AskForLeave.Status == (int)AskForLeaveStatus.Rejected)
+    {
+        <br />
+        <div class="container row ">
+            <div class="col-12 container">
+                <input type="text" class="form-control text-danger" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="Your request is rejected." readonly="readonly">
+            </div>
+        </div>
+    }
+}
+
 <br />
 <div class="container row ">
     <div class="col-12 ">
-        @if (@Context.Session.GetInt32("uid") == Model.AskForLeave.CurrentAt.Id)
+        @if (@Context.Session.GetInt32("uid") == Model.AskForLeave.CurrentAtId)
         {
             <div class="pl-2  float-right">
-                <button type="button" class="btn btn-info" onclick="javascript:history.go(-1); return false;">APPROVE</button>
+                <a class="btn btn-success text-light" asp-controller="AskForLeave" asp-action="DoAction" asp-route-act="approve" asp-route-id="@Model.AskForLeave.Id">APPROVE</a>
             </div>
             <div class="pl-2  float-right">
-                <button type="button" class="btn btn-info" onclick="javascript:history.go(-1); return false;">REJECT</button>
+                <a class="btn btn-danger text-light" asp-controller="AskForLeave" asp-action="DoAction" asp-route-act="reject" asp-route-id="@Model.AskForLeave.Id">REJECT</a>
             </div>
         }
         <div class="pl-2  float-right">

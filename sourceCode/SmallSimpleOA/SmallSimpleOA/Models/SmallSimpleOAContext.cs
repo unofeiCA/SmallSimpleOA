@@ -45,8 +45,8 @@ namespace SmallSimpleOA.Models
                 entity.Property(e => e.Valid).HasDefaultValueSql("((1))");
 
             });
-          //  modelBuilder.Entity<AskForLeave>().HasOne(p => p.Applicant).WithMany(u => u.AskForLeaves).HasForeignKey(p => p.ApplicantId);
-         //   modelBuilder.Entity<AskForLeave>().HasOne(p => p.CurrentAt).WithMany(u => u.LeaveRequests).HasForeignKey(p => p.CurrentAtId);
+        //    modelBuilder.Entity<AskForLeave>().HasOne(p => p.Applicant).WithMany();//.HasForeignKey(p => p.ApplicantId);
+         //   modelBuilder.Entity<AskForLeave>().HasOne(p => p.CurrentAt).WithMany(u => u.LeaveRequests);//.HasForeignKey(p => p.CurrentAtId);
 
             modelBuilder.Entity<Attendance>(entity =>
             {
@@ -100,7 +100,7 @@ namespace SmallSimpleOA.Models
 
             modelBuilder.Entity<Uzer>(entity =>
             {
-                entity.Property(e => e.Id).HasColumnName("ID").ValueGeneratedOnAddOrUpdate();
+                entity.Property(e => e.Id).HasColumnName("ID");//.ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Email)
                     .HasMaxLength(255)
@@ -126,8 +126,8 @@ namespace SmallSimpleOA.Models
 
                 entity.Property(e => e.Valid).HasDefaultValueSql("((1))");
             });
-          //  modelBuilder.Entity<Uzer>().HasMany(u => u.AskForLeaves).WithOne();
-          //  modelBuilder.Entity<Uzer>().HasMany(u => u.LeaveRequests).WithOne();
+            //modelBuilder.Entity<Uzer>().HasMany(u => u.AskForLeaves).WithOne();
+           // modelBuilder.Entity<Uzer>().HasMany(u => u.LeaveRequests).WithOne();
 
         }
     }

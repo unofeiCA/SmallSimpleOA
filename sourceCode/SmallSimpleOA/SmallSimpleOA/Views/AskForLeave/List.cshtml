@@ -19,7 +19,7 @@
         <div class="list-group">
             @foreach (var ask in Model.AskForLeavesList)
             {
-                <a href="@Url.Action("Detail", "AskForLeave", new { id = ask.Id})" class="list-group-item list-group-item-action">@ask.Reason &nbsp;&nbsp; @ask.StartTime @if(ask.Status == (int)AskForLeaveStatus.Approved){<i class="fas fa-check float-right"></i>}</a>
+                <a href="@Url.Action("Detail", "AskForLeave", new { id = ask.Id})" class="list-group-item list-group-item-action">@ask.Reason &nbsp;&nbsp; @ask.StartTime @if(ask.Status == (int)AskForLeaveStatus.Approved){<i class="fas fa-check float-right"></i>} @if(ask.Status == (int)AskForLeaveStatus.Rejected){<i class="fas fa-times float-right"></i>}</a>
             }
         </div>
         <br />

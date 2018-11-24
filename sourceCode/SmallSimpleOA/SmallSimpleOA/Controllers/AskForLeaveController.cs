@@ -8,6 +8,7 @@ using SmallSimpleOA.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using SmallSimpleOA.Models;
+using SmallSimpleOA.Services;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace SmallSimpleOA.Controllers
@@ -103,9 +104,20 @@ namespace SmallSimpleOA.Controllers
 
             }
 
-            Uzer u = UserService.FindUserByID((int)uid);
 
-            AskForLeaveService.AddAskForLeave(u, st, et, DateTime.Now, reason, memo);
+            AskForLeave ask = AskForLeaveService.AddAskForLeave((int)uid, st, et, DateTime.Now, reason, memo);
+
+            Uzer supervisor = UserService.FindSupervisorByUid((int)uid);
+            if (supervisor == null)
+            {
+                ask.Status = (int)AskForLeaveStatus.Approved;
+                ask.CurrentAtId = (int)uid;
+            }
+            else
+            {
+                ask.CurrentAtId = supervisor.Id;
+            }
+            AskForLeaveService.UpdateAskForLeave(ask);
 
             return RedirectToAction("New", "AskForLeave", new { r = result });
         }
@@ -130,7 +142,48 @@ namespace SmallSimpleOA.Controllers
 
         public IActionResult DoAction(string id, string act)
         {
-            return View();
+            int? uid = HttpContext.Session.GetInt32("uid");
+            if (uid == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+            int askId;
+            if (!Int32.TryParse(id, out askId))
+            {
+                return RedirectToAction("List", "AskForLeave");
+
+            }
+            AskForLeave ask = AskForLeaveService.FindAskForLeaveById(askId);
+
+            if (ask == null)
+            {
+                return RedirectToAction("List", "AskForLeave");
+
+            }
+
+            if (act.Equals("reject"))
+            {
+                ask.CurrentAtId = 0;
+                ask.Status = (int)AskForLeaveStatus.Rejected;
+                AskForLeaveService.UpdateAskForLeave(ask);
+            }
+            else if (act.Equals("approve"))
+            {
+                Uzer supervisor = UserService.FindSupervisorByUid((int)uid);
+                if (supervisor == null)
+                {
+                    ask.CurrentAtId = 0;
+                    ask.Status = (int)AskForLeaveStatus.Approved;
+                    AskForLeaveService.UpdateAskForLeave(ask);
+                }
+                else
+                {
+                    ask.CurrentAtId = supervisor.Id;
+                    ask.Status = (int)AskForLeaveStatus.Reviewing;
+                    AskForLeaveService.UpdateAskForLeave(ask);
+                }
+            }
+            return RedirectToAction("Home", "Home");
         }
 
     }

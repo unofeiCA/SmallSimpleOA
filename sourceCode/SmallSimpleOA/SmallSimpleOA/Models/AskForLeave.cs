@@ -8,26 +8,26 @@ namespace SmallSimpleOA.Models
 {
     public partial class AskForLeave
     {
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity), Key]
+        [Key]
         public int Id { get; set; }
         public bool? Valid { get; set; } = true;
         public int? Status { get; set; }
 
-        [Column("Applicant")]
+        [Column("Applicant"), ForeignKey("Applicant")]
         public int ApplicantId { get; set; }
         public string Reason { get; set; }
         public DateTime? AppTime { get; set; }
 
-        [Column("CurrentAt")]
+        [Column("CurrentAt"), ForeignKey("CurrentAt")]
         public int CurrentAtId { get; set; }
         public string Memo { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
 
-        [ForeignKey("ApplicantId")]
+       // [ForeignKey("ApplicantId")]
         public virtual Uzer Applicant { get; set; }
 
-        [ForeignKey("CurrentAtId")]
+      //  [ForeignKey("CurrentAtId")]
         public virtual Uzer CurrentAt { get; set; }
     }
 
@@ -35,6 +35,7 @@ namespace SmallSimpleOA.Models
     {
         Applied = 1,
         Reviewing = 2,
-        Approved = 3
+        Approved = 3,
+        Rejected = 4
     }
 }

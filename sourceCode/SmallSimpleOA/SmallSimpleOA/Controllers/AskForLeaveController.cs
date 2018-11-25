@@ -111,7 +111,7 @@ namespace SmallSimpleOA.Controllers
             if (supervisor == null)
             {
                 ask.Status = (int)AskForLeaveStatus.Approved;
-                ask.CurrentAtId = (int)uid;
+                ask.CurrentAtId = 0;
             }
             else
             {

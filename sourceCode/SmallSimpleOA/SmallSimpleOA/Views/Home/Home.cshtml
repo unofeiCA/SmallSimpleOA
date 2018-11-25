@@ -10,7 +10,11 @@
         <div class="list-group">
             @foreach (var e in Model.EventList)
             {
-                <a href="@Url.Action("Detail", "AskForLeave", new { id = e.Id})" class="list-group-item list-group-item-action">@e.Applicant.FirstName&nbsp;@e.Applicant.LastName&nbsp;&nbsp;@e.Reason <span class="float-right">@e.StartTime</span></a>
+                <a href="@Url.Action("Detail", "AskForLeave", new { id = e.Id})" class="list-group-item list-group-item-action">
+                    <span class="d-inline-block text-truncate" style="max-width:35%;">@e.Applicant.FirstName&nbsp;@e.Applicant.LastName</span>&nbsp;&nbsp;
+                    <span class="d-inline-block text-truncate" style="max-width:35%;">@e.Reason &nbsp;</span>
+                    <span class="d-inline-block float-right">@e.StartTime</span>
+                </a>
             }
 
         </div>

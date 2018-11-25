@@ -35,6 +35,7 @@ namespace SmallSimpleOA.Controllers
                 user.Salt = salt;
                 string newPwd = UserPasswordUtil.GeneratePasswordAfterSalt(password, salt);
                 user.Password = newPwd;
+                user.LastLogin = DateTime.Now;
                 UserService.UpdateUser(user);
                 HttpContext.Session.SetInt32("uid", user.Id);
                 return RedirectToAction("Home", "Home");

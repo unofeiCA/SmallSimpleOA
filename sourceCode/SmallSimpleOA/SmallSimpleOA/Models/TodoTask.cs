@@ -16,4 +16,13 @@ namespace SmallSimpleOA.Models
         public int? UzerId { get; set; }
 
     }
+
+    public enum TodoTaskStatus
+    {
+        Done = 1,
+        Faraway = 2, // over 90 days
+        Approching = 3, // 30 days to 90 days
+        DueSoon = 4, // less than 30 days
+        Due = 5
+    }
 }

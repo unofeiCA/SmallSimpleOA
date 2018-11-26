@@ -3,38 +3,76 @@
 *@
 @{
 }
-<form>
-    <div class="container row ">
-        <div class="col-12 container">
-            <div class="input-group input-group-lg">
+@using Microsoft.AspNetCore.Http
+@model SmallSimpleOA.ViewModels.TodoTaskDetailViewModel;
 
-                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+<form asp-controller="Todo" asp-action="DoUpdate" method="post">
+    <div class="row container">
+        <div class="col-12">
+            <h3 class="float-left">Todo Task</h3>
+        </div>
+    </div>
+
+    <div class="container row">
+        <div class="col-12 container">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
+                </div>
+                <input type="text" class="form-control" asp-for="Title" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value="@Model.Todo.Title">
             </div>
         </div>
     </div>
     <div class="container row ">
         <div class="col-12 container">
-            <textarea class="form-control rounded-0" id="exampleFormControlTextarea1" rows="10"></textarea>
+            Content
+            <textarea class="form-control rounded-0" name="Content" style="resize: none;" rows="10" >@Model.Todo.Content</textarea>
         </div>
     </div>
+    <br/>
     <div class="container row ">
-        <div class="col-8">
+        <div class="col-12 container">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">DeadLine</span>
+                </div>
+                <input type="text" id="DeadLine" class="form-control datetimepicker-input" autocomplete="off" data-toggle="datetimepicker" data-target="#DeadLine" asp-for="DeadLine" value="@Model.Todo.DeadLine">
+
+            </div>
         </div>
-        <div class="col-4">
-            <div class="row">
-                <div class="col-3 container">
-                    <button type="button" class="btn btn-info">BACK</button>
+    </div>
+    <input type="hidden" asp-for="Id" value="@Model.Todo.Id" />
+
+    <br />
+    <div class="container row ">
+        <div class="col-12 ">
+            @if (Model.Todo.Status != (int)TodoTaskStatus.Done)
+            {
+                <div class="pl-2  float-right">
+                    <button type="submit" class="btn btn-success">SUBMIT</button>
                 </div>
-                <div class="col-3 container">
-                    <button type="button" class="btn btn-danger">DELETE</button>
+
+
+                <div class="pl-2  float-right">
+                    <a class="btn btn-primary" asp-controller="Todo" asp-action="DoDone" asp-route-id="@Model.Todo.Id">FINISH</a>
                 </div>
-                <div class="col-3 container">
-                    <button type="button" class="btn btn-dark">SAVE</button>
-                </div>
-                <div class="col-3 container">
-                    <button type="button" class="btn btn-success">DONE</button>
-                </div>
+            }
+
+
+            <div class="pl-2  float-right">
+                <a class="btn btn-danger" asp-controller="Todo" asp-action="DoDelete" asp-route-id="@Model.Todo.Id">DELETE</a>
+            </div>
+
+            <div class="pl-2  float-right">
+                <button type="button" class="btn btn-info" onclick="javascript:history.go(-1); return false;">BACK</button>
             </div>
         </div>
     </div>
 </form>
+
+@section Scripts{
+    <script type="text/javascript">
+        $('#DeadLine').datetimepicker('minDate', moment());
+
+    </script>
+}

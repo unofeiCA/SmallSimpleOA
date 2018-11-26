@@ -26,6 +26,13 @@
 .no-margin {
     margin:0;
 }
+.no-padding-left {
+    padding-left:0;
+}
+
+.no-padding-right {
+    padding-right: 0;
+}
 .h-5 {
     height: 5% !important;
 }

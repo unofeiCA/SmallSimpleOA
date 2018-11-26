@@ -3,33 +3,76 @@
 *@
 @{
 }
-<form>
-    <div class="container row ">
+@model SmallSimpleOA.ViewModels.TodoNewViewModel;
+<form asp-controller="Todo" asp-action="DoNew" method="post">
+    <div class="row container">
+        <div class="col-12">
+            <h3 class="float-left">New Todo Task</h3>
+        </div>
+    </div>
+
+    <div class="container row">
         <div class="col-12 container">
-            <div class="input-group input-group-lg">
-                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
+                </div>
+                <input type="text" class="form-control" asp-for="Title" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
             </div>
         </div>
     </div>
     <div class="container row ">
         <div class="col-12 container">
-            <textarea class="form-control rounded-0" id="exampleFormControlTextarea1" rows="10"></textarea>
+            Content
+            <textarea class="form-control rounded-0" style="resize:none;" asp-for="Content" rows="10"></textarea>
         </div>
     </div>
+    <br/>
     <div class="container row ">
-        <div class="col-8">
-        </div>
-        <div class="col-4">
-            <div class="row">
-                <div class="col-3 container">
-                    <button type="button" class="btn btn-info">BACK</button>
+        <div class="col-12 container">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">DeadLine</span>
                 </div>
-               
-                <div class="col-3 container">
-                    <button type="button" class="btn btn-dark">SAVE</button>
-                </div>
+                <input type="text" id="DeadLine" name="DeadLine" class="form-control datetimepicker-input" autocomplete="off" data-toggle="datetimepicker" data-target="#DeadLine">
 
             </div>
         </div>
     </div>
+
+
+
+    @if (Model.LastNewSuccess == 1)
+    {
+        <div class="container row">
+            <div class="col-12">
+                <p class="text-success">@Model.LastNewPrompt</p>
+            </div>
+        </div>
+    }
+    else if (Model.LastNewSuccess == -1)
+    {
+        <div class="container row">
+            <div class="col-12">
+                <p class="text-danger">@Model.LastNewPrompt</p>
+            </div>
+        </div>
+    }
+    <br />
+    <div class="container row ">
+        <div class="col-12 ">
+            <div class="pl-2  float-right">
+                <button type="submit" class="btn btn-success">SUBMIT</button>
+            </div>
+            <div class="pl-2  float-right">
+                <button type="button" class="btn btn-info" onclick="javascript:history.go(-1); return false;">BACK</button>
+            </div>
+        </div>
+    </div>
 </form>
+@section Scripts{
+<script type="text/javascript">
+        $('#DeadLine').datetimepicker('minDate', moment());
+
+</script>
+}

@@ -1,11 +1,11 @@
 # SmallSimpleOA
 - This is my final project of Junior .NET Developer Training by Manitoba Start & ComIT.
 
-##Login/Logout:
+## Login/Logout:
 - You can login by email and password;
 - You can logout by the menu on the top-right corner.
 
-##User Management:
+## User Management:
 - You can add user by admin account:
 - username: admin@ssoa.ca
 - password: password
@@ -34,7 +34,7 @@
    - eric@ssoa.ca
 
 
-##Attendance:
+## Attendance:
 - Everyday if you have not clock in, the home page gives you a tip to clock in.
 - You can clock in one time per day.
 - You can clock out several time per day, and the later clock out overwrites the earlier one.
@@ -44,10 +44,10 @@
 - Members of HR department can check othre guys' attendance.
 
 
-##AskForLeave:
+## AskForLeave:
 - A leave request from a guy with a highest level in his/her department will be approved immediately by him/herself. 
 
-##Todo List
+## Todo List
 - You can add todo task for yourself and they show in different colors according to how long from now to the dead line.
 
-##Message
+## Message

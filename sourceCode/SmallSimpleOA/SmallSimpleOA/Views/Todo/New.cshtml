@@ -27,7 +27,7 @@
             <textarea class="form-control rounded-0" style="resize:none;" asp-for="Content" rows="10"></textarea>
         </div>
     </div>
-    <br/>
+    <br />
     <div class="container row ">
         <div class="col-12 container">
             <div class="input-group mb-3">
@@ -40,6 +40,7 @@
         </div>
     </div>
 
+    <input type="hidden" asp-for="F" value="@Model.F" />
 
 
     @if (Model.LastNewSuccess == 1)
@@ -72,7 +73,15 @@
 </form>
 @section Scripts{
 <script type="text/javascript">
-        $('#DeadLine').datetimepicker('minDate', moment());
+
+
+        @*
+            There seems to be a bug in the datetimepicker library when
+            I try to set the min date of it, so I have to do the date time
+            validation in backend.
+        *@
+        $('#DeadLine').datetimepicker();
+
 
 </script>
 }

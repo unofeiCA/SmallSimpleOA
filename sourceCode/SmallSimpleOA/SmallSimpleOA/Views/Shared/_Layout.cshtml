@@ -20,14 +20,19 @@
 </head>
 <body>
     <div id="messagePopBase" class="row fixed-top bg-dark h-50px pl-3 no-margin">
-        <div class="col-11 d-flex align-items-center ">
+        <div class="col-6 d-flex align-items-center ">
             <h2 class="text-white font-weight-bold font-italic">SmallSimpleOA</h2>
         </div>
-        <div class="col-1 d-flex align-items-center">
-            <div class="dropdown">
-                <span id="dropdownMenuButton" style="color:white;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                    <i id="menuIcon" class="fas fa-bars"></i>
+        <div class="col-6 d-flex align-items-center">
+
+            <div class="dropdown w-100">
+
+                <span id="dropdownMenuButton" class=" text-white float-right text-truncate" style="color:white;margin-right:3rem;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i id="menuIcon" class="fas fa-user"></i>
+
+                    @Context.Session.GetString("uname")
+
                 </span>
                 <div class="dropdown-menu " aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="#" id="clockIn">Clock In</a>

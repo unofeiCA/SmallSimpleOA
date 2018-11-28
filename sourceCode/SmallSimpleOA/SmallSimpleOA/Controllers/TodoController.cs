@@ -49,10 +49,10 @@ namespace SmallSimpleOA.Controllers
             return View(todoListViewModel);
         }
 
-        public IActionResult New(string r)
+        public IActionResult New(string r, string f)
         {
             TodoNewViewModel todoNewViewModel = new TodoNewViewModel();
-
+            todoNewViewModel.SetFrom(f);
             if (r == null)
             {
                 todoNewViewModel.LastNewSuccess = 0;
@@ -74,7 +74,7 @@ namespace SmallSimpleOA.Controllers
 
 
         [HttpPost]
-        public IActionResult DoNew(string deadline, string title, string content)
+        public IActionResult DoNew(string deadline, string title, string content, string f)
         {
 
             string result = "0";
@@ -128,10 +128,20 @@ namespace SmallSimpleOA.Controllers
 
             TodoTaskService.AddTodoTask((int)uid, title, content, dl, status);
 
-            return RedirectToAction("Home", "Home");
+            if (f != null && f.Equals("h"))
+            {
+                return RedirectToAction("Home", "Home");
+
+            }
+            else
+            {
+                return RedirectToAction("List", "Todo");
+
+            }
+
         }
 
-        public IActionResult Detail(string id, string r)
+        public IActionResult Detail(string id, string r, string f)
         {
             int? uid = HttpContext.Session.GetInt32("uid");
             if (uid == null)
@@ -146,7 +156,7 @@ namespace SmallSimpleOA.Controllers
 
             TodoTask todo = TodoTaskService.FindTodoTaskById(i);
             TodoTaskDetailViewModel model = new TodoTaskDetailViewModel(todo);
-
+            model.SetFrom(f);
             if (r == null)
             {
                 model.LastUpdateSuccess = 0;
@@ -167,7 +177,7 @@ namespace SmallSimpleOA.Controllers
         }
 
 
-        public IActionResult DoDone(string id)
+        public IActionResult DoDone(string id, string f)
         {
             int? uid = HttpContext.Session.GetInt32("uid");
             if (uid == null)
@@ -191,10 +201,19 @@ namespace SmallSimpleOA.Controllers
             todo.Status = (int)TodoTaskStatus.Done;
             TodoTaskService.UpdateTodoTask(todo);
 
-            return RedirectToAction("Home", "Home");
+            if (f != null && f.Equals("h"))
+            {
+                return RedirectToAction("Home", "Home");
+
+            }
+            else
+            {
+                return RedirectToAction("List", "Todo");
+
+            }
         }
 
-        public IActionResult DoDelete(string id)
+        public IActionResult DoDelete(string id, string f)
         {
             int? uid = HttpContext.Session.GetInt32("uid");
             if (uid == null)
@@ -219,11 +238,20 @@ namespace SmallSimpleOA.Controllers
             todo.ModifyTime = DateTime.Now;
             TodoTaskService.UpdateTodoTask(todo);
 
-            return RedirectToAction("Home", "Home");
+            if (f != null && f.Equals("h"))
+            {
+                return RedirectToAction("Home", "Home");
+
+            }
+            else
+            {
+                return RedirectToAction("List", "Todo");
+
+            }
         }
 
 
-        public IActionResult DoUpdate(string id, string title, string content, string deadline)
+        public IActionResult DoUpdate(string id, string title, string content, string deadline, string f)
         {
 
             int? uid = HttpContext.Session.GetInt32("uid");
@@ -294,8 +322,16 @@ namespace SmallSimpleOA.Controllers
             todo.ModifyTime = DateTime.Now;
             TodoTaskService.UpdateTodoTask(todo);
 
-            return RedirectToAction("Home", "Home");
+            if (f != null && f.Equals("h"))
+            {
+                return RedirectToAction("Home", "Home");
 
+            }
+            else
+            {
+                return RedirectToAction("List", "Todo");
+
+            }
         }
 
     }

@@ -15,56 +15,70 @@
 
         <div class="row container no-padding-left no-padding-right">
             <div class="col-12 no-padding-left no-padding-right">
-                <div class="list-group">
-                    @foreach (var e in Model.EventList)
-                    {
-                        var date = "";
-                        if (e.StartTime != null)
-                        {
-                            date = ((DateTime)e.StartTime).ToString("yyyy/MM/dd");
-                        }
-                        else
-                        {
-                            date = "";
-                        }
 
-                        <a href="@Url.Action("Detail", "AskForLeave", new { id = e.Id})" class="list-group-item list-group-item-action">
-                            <span class="d-inline-block text-truncate" style="max-width:25%;">@e.Applicant.FirstName&nbsp;@e.Applicant.LastName</span>&nbsp;&nbsp;
-                            <span class="d-inline-block text-truncate" style="max-width:45%;">@e.Reason &nbsp;</span>
-                            <span class="d-inline-block float-right">@date</span>
-                        </a>
-                    }
-
-                </div>
-                <br />
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="@Url.Action("Home", "Home", new { ep = Model.EventCurrentPage <= 1 ? 1 : Model.EventCurrentPage - 1  })" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-
-                        @for (int i = 0; i < Model.EventPageitems.Count(); i++)
+                @if (Model.EventList.Count > 0)
+                {
+                    <div class="list-group">
+                        @foreach (var e in Model.EventList)
                         {
-                            if (Model.EventPageitems[i] == Model.EventCurrentPage)
+                            var date = "";
+                            if (e.StartTime != null)
                             {
-                                <li class="page-item active"><a class="page-link" href="@Url.Action("Home", "Home", new { ep = Model.EventPageitems[i]})">@Model.EventPageitems[i]</a></li>
+                                date = ((DateTime)e.StartTime).ToString("yyyy/MM/dd");
                             }
                             else
                             {
-                                <li class="page-item"><a class="page-link" href="@Url.Action("Home", "Home", new { ep = Model.EventPageitems[i]})">@Model.EventPageitems[i]</a></li>
+                                date = "";
                             }
-                        }
-                        <li class="page-item">
-                            <a class="page-link" href="@Url.Action("Home", "Home", new { ep = Model.EventCurrentPage >= Model.EventPages ? Model.EventPages : Model.EventCurrentPage + 1})" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Next</span>
+
+                            <a href="@Url.Action("Detail", "AskForLeave", new { id = e.Id })" class="list-group-item list-group-item-action">
+                                <span class="d-inline-block text-truncate" style="max-width:25%;">@e.Applicant.FirstName&nbsp;@e.Applicant.LastName</span>&nbsp;&nbsp;
+                                <span class="d-inline-block text-truncate" style="max-width:45%;">@e.Reason &nbsp;</span>
+                                <span class="d-inline-block float-right">@date</span>
                             </a>
-                        </li>
-                    </ul>
-                </nav>
+                        }
+
+                    </div>
+
+                    @if (Model.EventPages > 1)
+                    {
+                    <br />
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("Home", "Home", new { ep = Model.EventCurrentPage <= 1 ? 1 : Model.EventCurrentPage - 1 })" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+
+                            @for (int i = 0; i < Model.EventPageitems.Count(); i++)
+                            {
+                                if (Model.EventPageitems[i] == Model.EventCurrentPage)
+                                {
+                                    <li class="page-item active"><a class="page-link" href="@Url.Action("Home", "Home", new { ep = Model.EventPageitems[i] })">@Model.EventPageitems[i]</a></li>
+                                }
+                                else
+                                {
+                                    <li class="page-item"><a class="page-link" href="@Url.Action("Home", "Home", new { ep = Model.EventPageitems[i] })">@Model.EventPageitems[i]</a></li>
+                                }
+                            }
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("Home", "Home", new { ep = Model.EventCurrentPage >= Model.EventPages ? Model.EventPages : Model.EventCurrentPage + 1 })" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    }
+                }
+                else
+                {
+                    <h4 style="color: lightgrey;">You don't have any data in this area yet. </h4>
+                    <h4 style="color: lightgrey;">You will get a event when others' leave requests flow to you. </h4>
+
+                }
 
             </div>
         </div>
@@ -75,85 +89,97 @@
                 <h3 class="float-left">Todo Task</h3>
             </div>
             <div class="col-1 d-flex  ">
-                <button type="button" class="btn btn-success btn-sm align-self-center" onclick="javascript:location.href='@Url.Action("New", "Todo")'">NEW</button>
+                <button type="button" class="btn btn-success btn-sm align-self-center" onclick="javascript:location.href='@Url.Action("New", "Todo", new { f = "h"})'">NEW</button>
             </div>
         </div>
         <div class="row container no-padding-left no-padding-right">
             <div class="col-12 no-padding-left no-padding-right">
-                <div class="list-group">
-                    @foreach (var e in Model.TodoTaskList)
-                    {
-
-                        var color = "";
-
-                        @if (e.Status == (int)TodoTaskStatus.Done)
+                @if (Model.TodoTaskList.Count > 0)
+                {
+                    <div class="list-group">
+                        @foreach (var e in Model.TodoTaskList)
                         {
-                            color = "bg-success text-white";
-                        }
-                        else if (e.Status == (int)TodoTaskStatus.Faraway)
-                        {
-                            color = "bg-light text-black";
-                        }
-                        else if (e.Status == (int)TodoTaskStatus.Approching)
-                        {
-                            color = "bg-info text-white";
-                        }
-                        else if (e.Status == (int)TodoTaskStatus.DueSoon)
-                        {
-                            color = "bg-warning text-white";
-                        }
-                        else if (e.Status == (int)TodoTaskStatus.Due)
-                        {
-                            color = "bg-danger text-white";
-                        }
 
+                            var color = "";
 
-                    var date = "";
-                    if (e.DeadLine != null)
-                    {
-                        date = ((DateTime)e.DeadLine).ToString("yyyy/MM/dd");
-                    }
-                    else
-                    {
-                        date = "";
-                    }
-
-                    <a href="@Url.Action("Detail", "Todo", new { id = e.Id})" class="list-group-item list-group-item-action @color">
-                        <span class="d-inline-block text-truncate" style="max-width: 75%;">@e.Title</span>&nbsp;&nbsp;
-
-                        <span class="d-inline-block float-right">@date&nbsp;&nbsp;</span>
-                    </a>
-                }
-                </div>
-                <br />
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="@Url.Action("Home", "Home", new { tp = Model.TodoCurrentPage <= 1 ? 1 : Model.TodoCurrentPage - 1  })" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-
-                        @for (int i = 0; i < Model.TodoPageitems.Count(); i++)
-                        {
-                            if (Model.TodoPageitems[i] == Model.TodoCurrentPage)
+                            @if (e.Status == (int)TodoTaskStatus.Done)
                             {
-                                <li class="page-item active"><a class="page-link" href="@Url.Action("Home", "Home", new { tp = Model.TodoPageitems[i]})">@Model.TodoPageitems[i]</a></li>
+                                color = "bg-success text-white";
+                            }
+                            else if (e.Status == (int)TodoTaskStatus.Faraway)
+                            {
+                                color = "bg-light text-black";
+                            }
+                            else if (e.Status == (int)TodoTaskStatus.Approching)
+                            {
+                                color = "bg-info text-white";
+                            }
+                            else if (e.Status == (int)TodoTaskStatus.DueSoon)
+                            {
+                                color = "bg-warning text-white";
+                            }
+                            else if (e.Status == (int)TodoTaskStatus.Due)
+                            {
+                                color = "bg-danger text-white";
+                            }
+
+
+                            var date = "";
+                            if (e.DeadLine != null)
+                            {
+                                date = ((DateTime)e.DeadLine).ToString("yyyy/MM/dd");
                             }
                             else
                             {
-                                <li class="page-item"><a class="page-link" href="@Url.Action("Home", "Home", new { tp = Model.TodoPageitems[i]})">@Model.TodoPageitems[i]</a></li>
+                                date = "";
                             }
+
+                        <a href="@Url.Action("Detail", "Todo", new { id = e.Id, f = "h" })" class="list-group-item list-group-item-action @color">
+                            <span class="d-inline-block text-truncate" style="max-width: 75%;">@e.Title</span>&nbsp;&nbsp;
+
+                            <span class="d-inline-block float-right">@date&nbsp;&nbsp;</span>
+                        </a>
                         }
-                                                <li class="page-item">
-                            <a class="page-link" href="@Url.Action("Home", "Home", new { ep = Model.TodoCurrentPage >= Model.TodoPages ? Model.TodoPages : Model.TodoCurrentPage + 1})" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+                    </div>
+
+                    @if (Model.TodoPages > 1)
+                    {
+                     <br />
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" href="@Url.Action("Home", "Home", new { tp = Model.TodoCurrentPage <= 1 ? 1 : Model.TodoCurrentPage - 1 })" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+
+                            @for (int i = 0; i < Model.TodoPageitems.Count(); i++)
+                            {
+                                if (Model.TodoPageitems[i] == Model.TodoCurrentPage)
+                                {
+                                    <li class="page-item active"><a class="page-link" href="@Url.Action("Home", "Home", new { tp = Model.TodoPageitems[i] })">@Model.TodoPageitems[i]</a></li>
+                                }
+                                else
+                                {
+                                    <li class="page-item"><a class="page-link" href="@Url.Action("Home", "Home", new { tp = Model.TodoPageitems[i] })">@Model.TodoPageitems[i]</a></li>
+                                }
+                            }
+                                                    <li class="page-item">
+                                <a class="page-link" href="@Url.Action("Home", "Home", new { ep = Model.TodoCurrentPage >= Model.TodoPages ? Model.TodoPages : Model.TodoCurrentPage + 1 })" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    }
+                }
+                else
+                {
+                    <h4 style="color: lightgrey;">You don't have any data in this area yet. </h4>
+                }
+
             </div>
         </div>
 

@@ -12,6 +12,12 @@ namespace SmallSimpleOA.ViewModels
         public int LastUpdateSuccess = 0;
         public string LastUpdatePrompt;
 
+        public string F { get; private set; }
+
+        public void SetFrom(string f)
+        {
+            F = f;
+        }
 
         public TodoTaskDetailViewModel(TodoTask todo)
         {

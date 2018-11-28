@@ -38,6 +38,7 @@ namespace SmallSimpleOA.Controllers
                 user.LastLogin = DateTime.Now;
                 UserService.UpdateUser(user);
                 HttpContext.Session.SetInt32("uid", user.Id);
+                HttpContext.Session.SetString("uname", user.FirstName + " " + user.LastName);
                 return RedirectToAction("Home", "Home");
             }else{
                 return RedirectToAction("Login", "Login", new {pwdNotCorrect = "1"});
@@ -59,7 +60,7 @@ namespace SmallSimpleOA.Controllers
         public IActionResult SignOut()
         {
             HttpContext.Session.Remove("uid");
-
+            HttpContext.Session.Remove("uname");
             return RedirectToAction("Login", "Login");
         }
 

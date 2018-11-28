@@ -26,22 +26,41 @@
     <div class="container row ">
         <div class="col-12 container">
             Content
-            <textarea class="form-control rounded-0" name="Content" style="resize: none;" rows="10" >@Model.Todo.Content</textarea>
+            <textarea class="form-control rounded-0" name="Content" style="resize: none;" rows="10">@Model.Todo.Content</textarea>
         </div>
     </div>
-    <br/>
+    <br />
     <div class="container row ">
         <div class="col-12 container">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">DeadLine</span>
                 </div>
-                <input type="text" id="DeadLine" class="form-control datetimepicker-input" autocomplete="off" data-toggle="datetimepicker" data-target="#DeadLine" asp-for="DeadLine" value="@Model.Todo.DeadLine">
+                <input type="text" id="DeadLine" name="DeadLine" class="form-control datetimepicker-input" autocomplete="off" data-toggle="datetimepicker" data-target="#DeadLine">
 
             </div>
         </div>
     </div>
     <input type="hidden" asp-for="Id" value="@Model.Todo.Id" />
+    <input type="hidden" asp-for="F" value="@Model.F" />
+
+    @if (Model.LastUpdateSuccess == 1)
+    {
+        <div class="container row">
+            <div class="col-12">
+                <p class="text-success">@Model.LastUpdatePrompt</p>
+            </div>
+        </div>
+    }
+    else if (Model.LastUpdateSuccess == -1)
+    {
+        <div class="container row">
+            <div class="col-12">
+                <p class="text-danger">@Model.LastUpdatePrompt</p>
+            </div>
+        </div>
+    }
+
 
     <br />
     <div class="container row ">
@@ -54,13 +73,13 @@
 
 
                 <div class="pl-2  float-right">
-                    <a class="btn btn-primary" asp-controller="Todo" asp-action="DoDone" asp-route-id="@Model.Todo.Id">FINISH</a>
+                    <a class="btn btn-primary" asp-controller="Todo" asp-action="DoDone" asp-route-F="@Model.F" asp-route-id="@Model.Todo.Id">FINISH</a>
                 </div>
             }
 
 
             <div class="pl-2  float-right">
-                <a class="btn btn-danger" asp-controller="Todo" asp-action="DoDelete" asp-route-id="@Model.Todo.Id">DELETE</a>
+                <a class="btn btn-danger" asp-controller="Todo" asp-action="DoDelete" asp-route-F="@Model.F" asp-route-id="@Model.Todo.Id">DELETE</a>
             </div>
 
             <div class="pl-2  float-right">
@@ -71,8 +90,8 @@
 </form>
 
 @section Scripts{
-    <script type="text/javascript">
-        $('#DeadLine').datetimepicker('minDate', moment());
-
-    </script>
+<script type="text/javascript">
+        let date = new Date("@Model.Todo.DeadLine");
+        $('#DeadLine').datetimepicker({defaultDate: date});
+</script>
 }

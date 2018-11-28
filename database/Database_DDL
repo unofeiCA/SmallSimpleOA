@@ -3,89 +3,89 @@
 -- DROP TABLE SmallSimpleOA.dbo.AskForLeave
 
 CREATE TABLE SmallSimpleOA.dbo.AskForLeave (
-	ID int NOT NULL IDENTITY(1,1),
-	Valid bit DEFAULT ((1)),
-	Status int,
-	Applicant int,
-	Reason text,
-	AppTime datetime(3),
-	CurrentAt int,
-	Memo text,
-	StartTime datetime(3),
-	EndTime datetime(3),
+	ID int IDENTITY(1,1) NOT NULL,
+	Valid bit NULL,
+	Status int NULL,
+	Applicant int NOT NULL,
+	Reason text(16) NULL,
+	AppTime datetime NULL,
+	CurrentAt int NOT NULL,
+	Memo text(16) NULL,
+	StartTime datetime NULL,
+	EndTime datetime NULL,
 	CONSTRAINT PK__AskForLe__3214EC27F32D3639 PRIMARY KEY (ID)
-) go;
+) GO;
 
 -- Drop table
 
 -- DROP TABLE SmallSimpleOA.dbo.Attendance
 
 CREATE TABLE SmallSimpleOA.dbo.Attendance (
-	ID int NOT NULL IDENTITY(1,1),
-	Valid bit DEFAULT ((1)),
-	UzerID int,
-	ActionTime datetime(3),
-	ActionType int,
+	ID int IDENTITY(1,1) NOT NULL,
+	Valid bit NULL,
+	UzerID int NULL,
+	ActionTime datetime NULL,
+	ActionType int NULL,
 	CONSTRAINT PK__Attendan__3214EC27CBC3C422 PRIMARY KEY (ID)
-) go;
+) GO;
 
 -- Drop table
 
 -- DROP TABLE SmallSimpleOA.dbo.Department
 
 CREATE TABLE SmallSimpleOA.dbo.Department (
-	ID int NOT NULL IDENTITY(1,1),
-	Valid bit DEFAULT ((1)),
-	Name varchar(255),
-	TotalStaffLevel int,
+	ID int IDENTITY(1,1) NOT NULL,
+	Valid bit NULL,
+	Name varchar(255) NULL,
+	TotalStaffLevel int NULL,
 	CONSTRAINT PK__Departme__3214EC274073CBF5 PRIMARY KEY (ID)
-) go;
+) GO;
 
 -- Drop table
 
 -- DROP TABLE SmallSimpleOA.dbo.Message
 
 CREATE TABLE SmallSimpleOA.dbo.Message (
-	ID int NOT NULL IDENTITY(1,1),
-	Valid bit DEFAULT ((1)),
-	MsgFrom int,
-	MsgTo int,
-	Content text,
-	MsgTime datetime(3),
+	ID int IDENTITY(1,1) NOT NULL,
+	Valid bit NULL,
+	MsgFrom int NULL,
+	MsgTo int NULL,
+	Content text(16) NULL,
+	MsgTime datetime NULL,
 	CONSTRAINT PK__Message__3214EC27D2EDED21 PRIMARY KEY (ID)
-) go;
+) GO;
 
 -- Drop table
 
 -- DROP TABLE SmallSimpleOA.dbo.TodoTask
 
 CREATE TABLE SmallSimpleOA.dbo.TodoTask (
-	ID int NOT NULL IDENTITY(1,1),
-	Valid bit DEFAULT ((1)),
-	Status int,
-	Title text,
-	Content text,
-	CreateTime datetime(3),
-	ModifyTime datetime(3),
-	DeadLine datetime(3),
-	UzerID int,
+	ID int IDENTITY(1,1) NOT NULL,
+	Valid bit NULL,
+	Status int NULL,
+	Title text(16) NULL,
+	Content text(16) NULL,
+	CreateTime datetime NULL,
+	ModifyTime datetime NULL,
+	DeadLine datetime NULL,
+	UzerID int NULL,
 	CONSTRAINT PK__TodoTask__3214EC270A8492EF PRIMARY KEY (ID)
-) go;
+) GO;
 
 -- Drop table
 
 -- DROP TABLE SmallSimpleOA.dbo.Uzer
 
 CREATE TABLE SmallSimpleOA.dbo.Uzer (
-	ID int NOT NULL IDENTITY(1,1),
-	Valid bit DEFAULT ((1)),
-	LastName varchar(255),
-	FirstName varchar(255),
-	Department int,
-	UzerLevel int,
-	Email varchar(255),
-	Password varchar(255),
-	Salt varchar(255),
-	LastLogin datetime(3),
+	ID int IDENTITY(1,1) NOT NULL,
+	Valid bit NULL,
+	LastName varchar(255) NULL,
+	FirstName varchar(255) NULL,
+	Department int NULL,
+	UzerLevel int NULL,
+	Email varchar(255) NULL,
+	Password varchar(255) NULL,
+	Salt varchar(255) NULL,
+	LastLogin datetime NULL,
 	CONSTRAINT PK__Uzer__3214EC27A2D7ADC4 PRIMARY KEY (ID)
-) go;
+) GO;

@@ -20,8 +20,8 @@
     - clark@ssoa.ca
 
 - **HR deparmtnet:**
-    alexandra@ssoa.ca
-    kirk@ssoa.ca
+    - alexandra@ssoa.ca
+    - kirk@ssoa.ca
 
 - **Sale department:**
    - harpreet@ssoa.ca
@@ -45,9 +45,12 @@
 
 
 ## AskForLeave:
+- Everyone can request for leave and the leave request flows to every supervisor recursively until the highest one. Once one of the supervisor refuses the request, the request is rejected, or the request is approved.
 - A leave request from a guy with a highest level in his/her department will be approved immediately by him/herself. 
 
 ## Todo List
-- You can add todo task for yourself and they show in different colors according to how long from now to the dead line.
+- You can add todo tasks for yourself and they show in different colors according to how long from now to the dead line.
+- In home page, only unfinished tasks are listed sorted by dead line asc.
+- In todo task list page, unfinished tasks come first sorted by dead line asc and finished ones come after sorted by dead line desc.
 
 ## Message

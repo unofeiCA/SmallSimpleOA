@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using SmallSimpleOA.Models;
 using System.Linq;
+using System.Collections;
 
 namespace SmallSimpleOA.Services
 {
@@ -33,18 +34,51 @@ namespace SmallSimpleOA.Services
         public static List<TodoTask> FindUndoneTodoTaskByUserAndPageAndPagesize(int uid, int page, int size)
         {
             SmallSimpleOAContext ctx = new SmallSimpleOAContext();
-            List<TodoTask> res = ctx.TodoTask.Where(t => t.UzerId.Equals(uid) && t.Status != (int)TodoTaskStatus.Done && t.Valid == true).Skip((page - 1) * size).Take(size).OrderBy(t => t.DeadLine).ToList();
+            List<TodoTask> res = ctx.TodoTask.Where(t => t.UzerId.Equals(uid) && t.Status != (int)TodoTaskStatus.Done && t.Valid == true).OrderBy(t => t.DeadLine).Skip((page - 1) * size).Take(size).ToList();
             UpdateTodoStatus(res);
             return res;
         }
 
-        public static List<TodoTask> FindTaskByUserAndPageAndPagesize(int uid, int page, int size)
+        public static List<TodoTask> FindTodoTaskByUserAndPageAndPagesize(int uid, int page, int size)
         {
             SmallSimpleOAContext ctx = new SmallSimpleOAContext();
-            List<TodoTask> res = ctx.TodoTask.Where(t => t.UzerId.Equals(uid) && t.Valid == true).Skip((page - 1) * size).Take(size).OrderBy(t => t.DeadLine).ToList();
+
+            //unfinished tasks go first
+            List<TodoTask> res = ctx.TodoTask.Where(t => t.UzerId.Equals(uid) && t.Valid == true).OrderByDescending(t => t.Status).Skip((page - 1) * size).Take(size).ToList();
+
+            //put unfinished tasks and finished tasks into different List
+            List<TodoTask> finished = new List<TodoTask>();
+            List<TodoTask> unfinished = new List<TodoTask>();
+
+            foreach (TodoTask t in res)
+            {
+                if (t.Status == (int)TodoTaskStatus.Done)
+                {
+                    finished.Add(t);
+                }
+                else
+                {
+                    unfinished.Add(t);
+                }
+            }
+            finished.Sort((t1, t2) => ((DateTime)t2.DeadLine).CompareTo(t1.DeadLine));
+            unfinished.Sort((t1, t2) => ((DateTime)t1.DeadLine).CompareTo(t2.DeadLine));
+
+            //below doesn't work and i don't know why.
+            //finished.OrderByDescending(t => t.DeadLine).ToList();
+            //unfinished.OrderBy(t => t.DeadLine).ToList();
+
+            res.Clear();
+            res.AddRange(unfinished);
+            res.AddRange(finished);
             UpdateTodoStatus(res);
             return res;
         }
+
+        static void HandleComparison(TodoTask x, TodoTask y)
+        {
+        }
+
 
         public static TodoTask AddTodoTask(int uid, string title, string content, DateTime deadline, TodoTaskStatus status)
         {
@@ -141,5 +175,6 @@ namespace SmallSimpleOA.Services
             ctx.Update(todo);
             ctx.SaveChanges();
         }
+
     }
 }

@@ -42,7 +42,7 @@ namespace SmallSimpleOA.Controllers
                 page = 1;
             }
 
-            List<TodoTask> todos = TodoTaskService.FindTaskByUserAndPageAndPagesize((int)uid, page, PAGE_SIZE);
+            List<TodoTask> todos = TodoTaskService.FindTodoTaskByUserAndPageAndPagesize((int)uid, page, PAGE_SIZE);
 
             TodoListViewModel todoListViewModel = new TodoListViewModel(todos, pages, page);
 

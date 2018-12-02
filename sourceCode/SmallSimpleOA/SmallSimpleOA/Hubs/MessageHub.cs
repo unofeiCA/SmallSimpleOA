@@ -20,7 +20,6 @@ namespace SmallSimpleOA.Hubs
         public async Task SendMessage(string to, string message)
         {
             int? uid = Context.GetHttpContext().Session.GetInt32("uid");
-            uid = 1;
             if (uid != null)
             {
                 Uzer u = UserService.FindUserByID((int)uid);
@@ -33,13 +32,13 @@ namespace SmallSimpleOA.Hubs
                 string connId = _store.GetConnectionIdByUserId(to);
                 if (connId != null)
                 {
-                    await Clients.Client(connId).SendAsync("ReceiveMessage", uid.ToString(),u.FirstName + " " + u.FirstName, message);
+                    await Clients.Client(connId).SendAsync("ReceiveMessage", uid.ToString(),u.FirstName + " " + u.LastName, message);
                 }
             }
         }
 
             
-    public override async Task OnConnectedAsync()
+        public override async Task OnConnectedAsync()
         {
             int? uid = Context.GetHttpContext().Session.GetInt32("uid");
             if (uid != null)
@@ -60,6 +59,7 @@ namespace SmallSimpleOA.Hubs
             await base.OnDisconnectedAsync(exception);
         }
 
+        /***********************************/
         private class MessageHubStore
         {
             private Dictionary<string, string> _connectionMap; // <userId, connectionId>

@@ -74,20 +74,16 @@
     </div>
 
 
-    <div id="messagePop" class="card text-white bg-info mb-3" style="max-width: 18rem;">
-        <div class="card-header">You Have NOT Clocked In Today! Clock In Now?</div>
+    <div id="messagePop" class="card text-white bg-info mb-3 bg-warning" style="max-width: 18rem; cursor:pointer;">
+            <div class="card-header">
+                <span class="text-truncate d-inline-block mw-100" id="msgHead"></span> 
+                <button type="button" class="close" id="closeCross" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
         <div class="card-body row">
-            <div class="col-auto">
-            </div>
-            <div class="col-auto button-light">
-                <a class="text-white" onclick="cancelClock();" href="#">No thanks</a>
-            </div>
-            <div class="col-2">
-            </div>
-            <div class="col-auto button-light">
-                <a class="text-white" onclick="clockIn();" href="#">Sure</a>
-            </div>
-            <div class="col-auto">
+            <div class="col-12">
+                <span class="text-truncate d-inline-block mw-100" id="msgBody"></span>
             </div>
         </div>
     </div>
@@ -106,6 +102,11 @@
 
     <script>
 
+        $("#closeCross").click(function(){
+            $("#messagePop").fadeOut();
+            return false;
+        });
+
         $('#clockOut').click(function()
         {
 
@@ -123,7 +124,7 @@
                         {
 
                             $('#menuIcon').switchClass('fa-bars','fa-check', 0).delay(2000).switchClass('fa-check','fa-bars', 0);
-    
+
                         }
                     },
                     error: function (response) {
@@ -150,7 +151,7 @@
                         {
 
                             $('#menuIcon').switchClass('fa-bars','fa-check', 0).delay(2000).switchClass('fa-check','fa-bars', 0);
-    
+
                         }
                     },
                     error: function (response) {
@@ -169,16 +170,24 @@
                 of: "#messagePopBase"
             });
         $("#messagePop").hide();
-        var connection = new signalR.HubConnectionBuilder().withUrl("/Message/MessageHub").build();
+
+        let connection = new signalR.HubConnectionBuilder().withUrl("/Message/MessageHub").build();
         connection.start().catch(function (err) {
             return console.error(err.toString());
         });
 
-        connection.on("ReceiveMessage", function (uid, userName, message)
+        let onMsgFunc = function (uid, userName, message)
         {
             var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            alert('message received');
-        });
+            $("#msgHead").text(userName);
+            $("#msgBody").text(message);
+            $("#messagePop").click(function(){
+                window.location.href = "@Url.Action("Message", "Message")" + "?u=" + uid;
+            });
+            $("#messagePop").fadeIn();
+        };
+
+        connection.on("ReceiveMessage", onMsgFunc);
 
     </script>
 

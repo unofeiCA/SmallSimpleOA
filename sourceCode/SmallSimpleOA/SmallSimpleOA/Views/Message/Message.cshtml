@@ -43,9 +43,6 @@
                                     <a href="#" onclick="javascript:chatWith(@user.Id)" class="list-group-item list-group-item-action">@user.FirstName&nbsp;@user.LastName</a>
                                 }
 
-                            <a href="#" class="list-group-item list-group-item-action active">
-                                Cras justo odio
-                            </a>
 
                         </div>
                     </div>
@@ -138,6 +135,14 @@
 </div>
 @section Scripts{
 <script>
+        connection.off( "ReceiveMessage", onMsgFunc);
+
+        connection.on("ReceiveMessage", function (uid, userName, message)
+        {
+            var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            alert('message received222');
+        });
+
         var to = 0;
 
         $("#messageBox").animate({ scrollTop: $("#messageBox").height() }, 1000);
@@ -159,10 +164,10 @@
             });
         });
 
-        function chatWith(var uid)
+        function chatWith(uid)
         {
             to = uid;
-            
+
         }
 
         function fetchMsgHis(){}

@@ -1,5 +1,13 @@
 # SmallSimpleOA
 - This is my final project of Junior .NET Developer Training by Manitoba Start & ComIT.
+- It is based on .NET Core and MVC.
+- It is developed on macOS with Visual Studio and MS SQL SERVER in Docker.
+- To run this project, you need to add following NuGet packages:
+    Microsoft.AspNetCore.App
+    Microsoft.EntityFrameworkCore
+    Microsoft.EntityFrameworkCore.Proxies
+    Newtonsoft.Json
+
 
 ## Login/Logout:
 - You can login by email and password;
@@ -43,6 +51,13 @@
 - Within a department a guy with higher level can check other guys' attendance whose level is lower than him/her.
 - Members of HR department can check othre guys' attendance.
 
+## Message
+- Every user can send a message to another.
+- If the receiver is online, he/she will receive a notification at once.
+- And he/she can click the notification to go to the message page to chat with the sender.
+- In the message page, you can view your chat history with others.
+- If you receive a new message when you are in the message page, it shows directly in your chat dialog or shows a badge on the user list.
+- When you log in it shows a badge on the navigation side if you have an unreaded message.
 
 ## AskForLeave:
 - Everyone can request for leave and the leave request flows to every supervisor recursively until the highest one. Once one of the supervisor refuses the request, the request is rejected, or the request is approved.
@@ -53,4 +68,3 @@
 - In home page, only unfinished tasks are listed sorted by dead line asc.
 - In todo task list page, unfinished tasks come first sorted by dead line asc and finished ones come after sorted by dead line desc.
 
-## Message

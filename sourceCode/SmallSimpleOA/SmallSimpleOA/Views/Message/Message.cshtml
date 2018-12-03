@@ -32,7 +32,7 @@
                 </div>
                 <div class="row  h-90">
                     <div class="col-12 h-100">
-                        <div class="list-group mh-100" style="overflow-y: scroll;">
+                        <div class="list-group mh-100" id="userList" style="overflow-y: scroll;">
 
                             @foreach (var user in Model.StaffOfDepartment)
                             {
@@ -40,8 +40,10 @@
                                 {
                                     continue;
                                 }
-                                    <a href="#" onclick="javascript:chatWith(@user.Id)" class="list-group-item list-group-item-action">@user.FirstName&nbsp;@user.LastName</a>
-                                }
+
+                                <a href="#" userId="@user.Id" class="list-group-item list-group-item-action">@user.FirstName&nbsp;@user.LastName</a>
+                                
+                            }
 
 
                         </div>
@@ -50,76 +52,10 @@
 
             </div>
             <div class="col-9 container h-100">
-                <div id="messageBox" class="h-80 container row border" style="overflow-y:scroll;">
+                <div id="messageBox" class="h-80 container  border" style="overflow-y:scroll;">
 
-                    <div class="w-100 h-25px">
-                        <p>fasfsdfdsf</p>
-                    </div>
-                    <div class="w-100 h-25px">
-                        <p>fasfsdfdsf</p>
-                    </div>
-                    <div class="w-100 h-25px">
-                        <p>fasfsdfdsf</p>
-                    </div>
-                    <div class="w-100 h-25px">
-                        <p>fasfsdfdsf</p>
-                    </div>
-                    <div class="w-100 h-25px">
-                        <p>fasfsdfdsf</p>
-                    </div>
-                    <div class="w-100 h-25px">
-                        <p>fasfsdfdsf</p>
-                    </div>
-                    <div class="w-100 h-25px">
-                        <p>fasfsdfdsf</p>
-                    </div>
-                    <div class="w-100 h-25px">
-                        <p>fasfsdfdsf</p>
-                    </div>
-                    <div class="w-100 h-25px">
-                        <p>fasfsdfdsf</p>
-                    </div>
-                    <div class="w-100 h-25px">
-                        <p>fasfsdfdsf</p>
-                    </div>
-                    <div class="w-100 h-25px">
-                        <p>fasfsdfdsf</p>
-                    </div>
-                    <div class="w-100 h-25px">
-                        <p>fasfsdfdsf</p>
-                    </div>
-                    <div class="w-100 h-25px">
-                        <p>fasfsdfdsf</p>
-                    </div>
-                    <div class="w-100 h-25px">
-                        <p>fasfsdfdsf</p>
-                    </div>
-                    <div class="w-100 h-25px">
-                        <p>fasfsdfdsf</p>
-                    </div>
-                    <div class="w-100 h-25px">
-                        <p>fasfsdfdsf</p>
-                    </div>
-                    <div class="w-100 h-25px">
-                        <p>fasfsdfdsf</p>
-                    </div>
-                    <div class="w-100 h-25px">
-                        <p>fasfsdfdsf</p>
-                    </div>
-                    <div class="w-100 h-25px">
-                        <p>fasfsdfdsf</p>
-                    </div>
-                    <div class="w-100 h-25px">
-                        <p>fasfsdfdsf</p>
-                    </div>
-                    <div class="w-100 h-25px">
-                        <p>fasfsdfdsf</p>
-                    </div>
-                    <div class="w-100 h-25px">
-                        <p>fasfsdfdsf</p>
-                    </div>
                 </div>
-                <div class="h-20 container row border p-3">
+                <div class="h-20 container row border p-3 m-0">
                     <div class="input-group">
                         <textarea id="msg" type="text" class="form-control h-100" placeholder="Type to input..." style="resize:none;"></textarea>
                         <div class="input-group-append" id="button-addon4">
@@ -127,12 +63,36 @@
                         </div>
                     </div>
 
-
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<div style="display:none;">
+    <div class="row p-1" id="msgBlockFrom">
+        <div class="col-11">
+            <div class="float-left rounded bg-info p-2 mw-100">
+                <p class="mb-0 mw-100" style="word-break:break-word;"></p>
+            </div>
+        </div>
+        <div class="col-1">
+        </div>
+    </div>
+
+    <div class="row p-1" id="msgBlockTo">
+        <div class="col-1">
+        </div>
+        <div class="col-11">
+            <div class="float-right rounded bg-success p-2 mw-100">
+                <p class="mb-0 mw-100" style="word-break:break-word;"></p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
 @section Scripts{
 <script>
         connection.off( "ReceiveMessage", onMsgFunc);
@@ -140,13 +100,17 @@
         connection.on("ReceiveMessage", function (uid, userName, message)
         {
             var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            alert('message received222');
+            if (uid == to){
+                @*current chat target*@
+                showMsg(message, 'from', 'tail');
+            }else{
+                @*not current*@
+                @*todo*@
+            }
+
         });
 
-        var to = 0;
-
         $("#messageBox").animate({ scrollTop: $("#messageBox").height() }, 1000);
-
 
         $("#messageBox").delay(2000).scroll(function(){
             if ($(this).scrollTop() < 20)
@@ -158,18 +122,61 @@
         $("#sendBtn").click(function()
         {
             if (to == 0){return;}
-            var message = $("#msg").val();
-            connection.invoke("SendMessage", to, message).catch(function (err) {
-            return console.error(err.toString());
+            let message = $("#msg").val();
+            if (message.trim() == ""){
+                return;
+            }
+            connection.invoke("SendMessage", to, message).then(function(){
+
+                showMsg(message, 'to', 'tail');
+            }).catch(function (err) {
+                return console.error(err.toString());
             });
         });
 
-        function chatWith(uid)
+        function showMsg(msg, fromTo, headTail){
+            let m;
+            if (fromTo == 'from'){
+                m = $("#msgBlockFrom").clone();
+            }else if(fromTo == 'to'){
+                m = $("#msgBlockTo").clone();
+            }else{
+                return;
+            }
+            m.find("p").text(msg);
+            if (headTail == 'head'){
+                $("#messageBox").prepend(m);
+            }else if (headTail == 'tail'){
+                $("#messageBox").append(m);
+                $("#messageBox").animate({ scrollTop: $("#messageBox").height() }, 1000);
+            }else{
+                return;
+            }
+        }
+
+        function fetchMsgHis(uid, offset)
         {
-            to = uid;
 
         }
 
-        function fetchMsgHis(){}
+        let to = 0;
+        $("#userList").children("a").click(function(){
+            $(this).parent().children().removeClass('active');
+            $(this).addClass('active');
+            to = $(this).attr('userId');
+            fetchMsgHis(to);
+        });
+
+        @*if already have a target, chat to that target directly*@
+        @if (Model.TargetId > 0)
+        {
+            @:$("#userList").children("a").each(function(){
+                @:if($(this).attr('userId') == @Model.TargetId)
+                @:{
+                    @:$(this).click();
+                @:}
+            @:});
+        }
+
 </script>
 }

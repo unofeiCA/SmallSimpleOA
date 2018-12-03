@@ -3,10 +3,10 @@
 - It is based on .NET Core and MVC.
 - It is developed on macOS with Visual Studio and MS SQL SERVER in Docker.
 - To run this project, you need to add following NuGet packages:
-    Microsoft.AspNetCore.App
-    Microsoft.EntityFrameworkCore
-    Microsoft.EntityFrameworkCore.Proxies
-    Newtonsoft.Json
+    Microsoft.AspNetCore.App   
+    Microsoft.EntityFrameworkCore   
+    Microsoft.EntityFrameworkCore.Proxies   
+    Newtonsoft.Json   
 
 
 ## Login/Logout:

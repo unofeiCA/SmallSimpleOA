@@ -30,7 +30,9 @@ namespace SmallSimpleOA.Controllers
                 todoPage = 1;
             }
 
-            int eventCount = AskForLeaveService.FindCountByCurrentAt((int)uid);
+            Uzer u = UserService.FindUserByID((int)uid);
+
+            int eventCount = AskForLeaveService.FindCountByCurrentAt(u);
             int todoCount = TodoTaskService.FindUndoneCountByUser((int)uid);
 
             int eventPages = eventCount % PAGE_SIZE == 0 ? eventCount / PAGE_SIZE : eventCount / PAGE_SIZE + 1;
@@ -54,7 +56,7 @@ namespace SmallSimpleOA.Controllers
                 todoPage = 1;
             }
 
-            List<AskForLeave> asks = AskForLeaveService.FindAskForLeaveByCurrentAtAndPageAndPagesize((int)uid, eventPage, PAGE_SIZE);
+            List<AskForLeave> asks = AskForLeaveService.FindAskForLeaveByCurrentAtAndPageAndPagesize(u, eventPage, PAGE_SIZE);
             List<TodoTask> todos = TodoTaskService.FindUndoneTodoTaskByUserAndPageAndPagesize((int)uid, todoPage, PAGE_SIZE);
 
             List<Attendance> attendanceList = AttendanceService.FindAttendanceByUserAndDateAndType((int)uid, DateTime.Now, AttendanceType.In);

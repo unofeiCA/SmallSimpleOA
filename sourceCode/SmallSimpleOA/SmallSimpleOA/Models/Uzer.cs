@@ -7,7 +7,6 @@ namespace SmallSimpleOA.Models
 {
     public partial class Uzer
     {
-
         public int Id { get; set; }
         public bool? Valid { get; set; } = true;
         public string LastName { get; set; }
@@ -19,10 +18,10 @@ namespace SmallSimpleOA.Models
         public string Salt { get; set; }
         public DateTime? LastLogin { get; set; }
 
-//        [InverseProperty("Applicant")]
-//        public virtual ICollection<AskForLeave> AskForLeaves { get; set; }
+        [InverseProperty("Applicant")]
+        public virtual ICollection<AskForLeave> AskForLeaves { get; set; }
 
-       // [InverseProperty("CurrentAt")]
-      //  public virtual ICollection<AskForLeave> LeaveRequests { get; set; }
+        [InverseProperty("CurrentAt")]
+        public virtual ICollection<AskForLeave> LeaveRequests { get; set; }
     }
 }

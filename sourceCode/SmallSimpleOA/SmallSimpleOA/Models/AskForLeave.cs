@@ -8,26 +8,21 @@ namespace SmallSimpleOA.Models
 {
     public partial class AskForLeave
     {
-        [Key]
         public int Id { get; set; }
         public bool? Valid { get; set; } = true;
         public int? Status { get; set; }
 
-        [Column("Applicant"), ForeignKey("Applicant")]
-        public int ApplicantId { get; set; }
         public string Reason { get; set; }
         public DateTime? AppTime { get; set; }
 
-        [Column("CurrentAt"), ForeignKey("CurrentAt")]
-        public int CurrentAtId { get; set; }
         public string Memo { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
 
-       // [ForeignKey("ApplicantId")]
+        [ForeignKey("ApplicantId")]
         public virtual Uzer Applicant { get; set; }
 
-      //  [ForeignKey("CurrentAtId")]
+        [ForeignKey("CurrentAtId")]
         public virtual Uzer CurrentAt { get; set; }
     }
 

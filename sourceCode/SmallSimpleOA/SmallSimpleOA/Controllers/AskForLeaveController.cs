@@ -28,7 +28,9 @@ namespace SmallSimpleOA.Controllers
                 page = 1;
             }
 
-            int count = AskForLeaveService.FindCountByApplicant((int)uid);
+            Uzer u = UserService.FindUserByID((int)uid);
+
+            int count = AskForLeaveService.FindCountByApplicant(u);
             int pages = count % PAGE_SIZE == 0 ? count / PAGE_SIZE : count / PAGE_SIZE + 1;
 
             if (page > pages)
@@ -41,7 +43,7 @@ namespace SmallSimpleOA.Controllers
                 page = 1;
             }
 
-            List<AskForLeave> asks = AskForLeaveService.FindAskForLeaveByApplicantAndPageAndPagesize((int)uid, page, PAGE_SIZE);
+            List<AskForLeave> asks = AskForLeaveService.FindAskForLeaveByApplicantAndPageAndPagesize(u, page, PAGE_SIZE);
 
             AskForLeaveListViewModel askForLeaveListViewModel = new AskForLeaveListViewModel(asks, pages, page);
             return View(askForLeaveListViewModel);
@@ -102,20 +104,11 @@ namespace SmallSimpleOA.Controllers
 
             }
 
+            Uzer u = UserService.FindUserByID((int)uid);
 
-            AskForLeave ask = AskForLeaveService.AddAskForLeave((int)uid, st, et, DateTime.Now, reason, memo);
+            AskForLeave ask = AskForLeaveService.AddAskForLeave(u, st, et, DateTime.Now, reason, memo);
 
-            Uzer supervisor = UserService.FindSupervisorByUid((int)uid);
-            if (supervisor == null)
-            {
-                ask.Status = (int)AskForLeaveStatus.Approved;
-                ask.CurrentAtId = 0;
-            }
-            else
-            {
-                ask.CurrentAtId = supervisor.Id;
-            }
-            AskForLeaveService.UpdateAskForLeave(ask);
+            AskForLeaveService.AskFlowToNextSupervisor(ask);
 
             return RedirectToAction("New", "AskForLeave", new { r = result });
         }
@@ -161,25 +154,13 @@ namespace SmallSimpleOA.Controllers
 
             if (act.Equals("reject"))
             {
-                ask.CurrentAtId = 0;
-                ask.Status = (int)AskForLeaveStatus.Rejected;
-                AskForLeaveService.UpdateAskForLeave(ask);
+
+                AskForLeaveService.RejectAskForLeave(ask);
             }
             else if (act.Equals("approve"))
             {
-                Uzer supervisor = UserService.FindSupervisorByUid((int)uid);
-                if (supervisor == null)
-                {
-                    ask.CurrentAtId = 0;
-                    ask.Status = (int)AskForLeaveStatus.Approved;
-                    AskForLeaveService.UpdateAskForLeave(ask);
-                }
-                else
-                {
-                    ask.CurrentAtId = supervisor.Id;
-                    ask.Status = (int)AskForLeaveStatus.Reviewing;
-                    AskForLeaveService.UpdateAskForLeave(ask);
-                }
+                AskForLeaveService.AskFlowToNextSupervisor(ask);
+
             }
             return RedirectToAction("Home", "Home");
         }

@@ -18,44 +18,43 @@ namespace SmallSimpleOA.Services
             return ctx.AskForLeave.Single(a => a.Id.Equals(id) && a.Valid == true);
         }
 
-        public static int FindCountByCurrentAt(int uid)
+        public static int FindCountByCurrentAt(Uzer u)
         {
 
             SmallSimpleOAContext ctx = new SmallSimpleOAContext();
-            return ctx.AskForLeave.Count(a => a.CurrentAtId.Equals(uid) && a.Valid == true);
+            return ctx.AskForLeave.Count(a => a.CurrentAt.Equals(u) && a.Valid == true);
+        }
+
+        public static int FindCountByApplicant(Uzer u)
+        {
+
+            SmallSimpleOAContext ctx = new SmallSimpleOAContext();
+            return ctx.AskForLeave.Count(a => a.Applicant.Equals(u) && a.Valid == true);
 
         }
 
-        public static int FindCountByApplicant(int uid)
+        public static List<AskForLeave> FindAskForLeaveByApplicantAndPageAndPagesize(Uzer u, int page, int size)
         {
 
             SmallSimpleOAContext ctx = new SmallSimpleOAContext();
-            return ctx.AskForLeave.Count(a => a.Applicant.Equals(uid) && a.Valid == true);
+            return ctx.AskForLeave.Where(a => a.Applicant.Equals(u) && a.Valid == true).OrderByDescending(a => a.AppTime).Skip((page - 1) * size).Take(size).ToList();
 
         }
 
-        public static List<AskForLeave> FindAskForLeaveByApplicantAndPageAndPagesize(int uid, int page, int size)
+        public static List<AskForLeave> FindAskForLeaveByCurrentAtAndPageAndPagesize(Uzer u, int page, int size)
         {
 
             SmallSimpleOAContext ctx = new SmallSimpleOAContext();
-            return ctx.AskForLeave.Where(a => a.Applicant.Equals(uid) && a.Valid == true).Skip((page - 1) * size).Take(size).OrderByDescending(a => a.AppTime).ToList();
-
-        }
-
-        public static List<AskForLeave> FindAskForLeaveByCurrentAtAndPageAndPagesize(int uid, int page, int size)
-        {
-
-            SmallSimpleOAContext ctx = new SmallSimpleOAContext();
-            return ctx.AskForLeave.Where(a => a.CurrentAtId.Equals(uid) && a.Valid == true).Skip((page - 1) * size).Take(size).OrderByDescending(a => a.AppTime).ToList();
+            return ctx.AskForLeave.Where(a => a.CurrentAt.Equals(u) && a.Valid == true).OrderByDescending(a => a.AppTime).Skip((page - 1) * size).Take(size).ToList();
 
         }
 
 
-        public static List<AskForLeave> FindAskForLeaveByCurrentAt(int uid)
+        public static List<AskForLeave> FindAskForLeaveByCurrentAt(Uzer u)
         {
 
             SmallSimpleOAContext ctx = new SmallSimpleOAContext();
-            return ctx.AskForLeave.Where(a => a.CurrentAtId.Equals(uid) && a.Valid == true).ToList();
+            return ctx.AskForLeave.Where(a => a.CurrentAt.Equals(u) && a.Valid == true).ToList();
 
         }
 
@@ -66,7 +65,7 @@ namespace SmallSimpleOA.Services
             ctx.SaveChanges();
         }
 
-        public static AskForLeave AddAskForLeave(int uid, DateTime startTime, DateTime endTime, DateTime appTime, string reason, string memo)
+        public static AskForLeave AddAskForLeave(Uzer u, DateTime startTime, DateTime endTime, DateTime appTime, string reason, string memo)
         {
             AskForLeave afl = new AskForLeave();
             afl.Valid = true;
@@ -76,20 +75,50 @@ namespace SmallSimpleOA.Services
             afl.Reason = reason;
             afl.Memo = memo;
             afl.Status = (int)AskForLeaveStatus.Applied;
-            afl.ApplicantId = uid;
-
-            //           applicant.AskForLeaves.Add(afl);
-            //           ctx.Update(afl);
-
-
-
-            //ctx.Update(afl);
 
             SmallSimpleOAContext ctx = new SmallSimpleOAContext();
-            ctx.Add(afl);
+            ctx.Update(u);
+            u.AskForLeaves.Add(afl);
+            u.LeaveRequests.Add(afl);
             ctx.SaveChanges();
             return afl;
         }
 
+        public static void AskFlowToNextSupervisor(AskForLeave ask) 
+        {
+            SmallSimpleOAContext ctx = new SmallSimpleOAContext();
+
+            Uzer supervisor = UserService.FindSupervisorByUid(ask.CurrentAt.Id);
+            if (supervisor == null)
+            {
+                ctx.Update(ask);
+                ask.Status = (int)AskForLeaveStatus.Approved;
+                ask.CurrentAt.LeaveRequests.Remove(ask);
+                ctx.SaveChanges();
+
+            }
+            else
+            {
+
+                ctx.Update(ask);
+                ask.Status = (int)AskForLeaveStatus.Reviewing;
+                ask.CurrentAt.LeaveRequests.Remove(ask);
+                ctx.SaveChanges();
+                ctx.Update(supervisor);
+                supervisor.LeaveRequests.Add(ask);
+                ctx.SaveChanges();
+
+            }
+
+        }
+
+        public static void RejectAskForLeave(AskForLeave ask) 
+        {
+            SmallSimpleOAContext ctx = new SmallSimpleOAContext();
+            ctx.Update(ask);
+            ask.CurrentAt.LeaveRequests.Remove(ask);
+            ask.Status = (int)AskForLeaveStatus.Rejected;
+            ctx.SaveChanges();
+        }
     }
 }

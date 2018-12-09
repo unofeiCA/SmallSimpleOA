@@ -1,12 +1,14 @@
 # SmallSimpleOA
 - This is my final project of Junior .NET Developer Training by Manitoba Start & ComIT.
 - It is based on .NET Core and MVC.
-- It is developed on macOS with Visual Studio and MS SQL SERVER in Docker.
+- It is developed on macOS with Visual Studio and MS SQL SERVER in Docker. Following link explains how to install MS SQL SERVER in Docker:          
+https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-2017
 - To run this project, you need to add following NuGet packages:   
     Microsoft.AspNetCore.App   
     Microsoft.EntityFrameworkCore   
     Microsoft.EntityFrameworkCore.Proxies   
-    Newtonsoft.Json   
+    Newtonsoft.Json      
+    SignalR library is also needed. I developed this project on a Mac, so I install the library by command line. If you run it on Windows, you might need to install the library from NuGet.
 
 
 ## Login/Logout:
@@ -17,6 +19,7 @@
 - You can add user by admin account:
 - username: admin@ssoa.ca
 - password: password
+- Every user's password stored in database is encoded by MD5 with password itself plus a random "salt".
 
 - With our test data we have other users listed as below and the password are their first name in lower case:
 

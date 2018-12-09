@@ -147,6 +147,7 @@
 
                 showMsg(message, 'to', 'tail');
             }).catch(function (err) {
+                alert('Something unexpected happened. Try refresh the page to see if it helps.');
                 return console.error(err.toString());
             });
             $("#msg").val("");

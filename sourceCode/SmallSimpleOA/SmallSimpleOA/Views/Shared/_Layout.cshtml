@@ -50,7 +50,7 @@
 
             <div class="col-2 bg-dark">
                 <nav class="nav flex-column ">
-                    @if (@Context.Session.GetInt32("uid") == -1)
+                    @if (@Context.Session.GetInt32("ulevel") == -1)
                     {
                         <a class="nav-link disabled text-white" asp-controller="StaffManage" asp-action="New">Add New Staff</a>
                     }

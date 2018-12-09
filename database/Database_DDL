@@ -6,10 +6,10 @@ CREATE TABLE SmallSimpleOA.dbo.AskForLeave (
 	ID int IDENTITY(1,1) NOT NULL,
 	Valid bit NULL,
 	Status int NULL,
-	Applicant int NOT NULL,
+	ApplicantId int NOT NULL,
 	Reason text(16) NULL,
 	AppTime datetime NULL,
-	CurrentAt int NOT NULL,
+	CurrentAtId int NULL,
 	Memo text(16) NULL,
 	StartTime datetime NULL,
 	EndTime datetime NULL,
@@ -52,6 +52,7 @@ CREATE TABLE SmallSimpleOA.dbo.Message (
 	MsgTo int NULL,
 	Content text(16) NULL,
 	MsgTime datetime NULL,
+	Readed bit NOT NULL,
 	CONSTRAINT PK__Message__3214EC27D2EDED21 PRIMARY KEY (ID)
 ) GO;
 

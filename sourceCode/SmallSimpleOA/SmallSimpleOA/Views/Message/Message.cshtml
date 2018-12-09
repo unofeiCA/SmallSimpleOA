@@ -249,7 +249,11 @@
             for (let k in unreadMsg){
                 if(k == to){
                     amount = unreadMsg[k];
+                    break;
                 }
+            }
+            if(amount < 20){
+                amount = 20;
             }
             fetching = 1;
             fetchMsgHis(to, offset, amount);

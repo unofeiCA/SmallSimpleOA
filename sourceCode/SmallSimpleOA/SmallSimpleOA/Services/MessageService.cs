@@ -27,12 +27,12 @@ namespace SmallSimpleOA.Services
             return res;
         }
 
-        public static void UpdateMsgReaded(List<Message> msgs) 
+        public static void UpdateMsgReaded(List<Message> msgs, int toId) 
         {
             SmallSimpleOAContext ctx = new SmallSimpleOAContext();
             foreach (Message m in msgs)
             {
-                if (!m.Readed)
+                if (!m.Readed && m.MsgTo.Equals(toId) )
                 {
                     ctx.Update(m);
                     m.Readed = true;

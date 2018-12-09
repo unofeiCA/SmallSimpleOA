@@ -62,7 +62,7 @@ namespace SmallSimpleOA.Controllers
                 msgs = MessageService.FindMessageByUserAndTargetAndOffsetAndAmount((int)uid, tid, ost, amount);
             }
 
-            MessageService.UpdateMsgReaded(msgs);
+            MessageService.UpdateMsgReaded(msgs, (int)uid);
 
             string msgJson = JsonConvert.SerializeObject(msgs);
             return Content(msgJson);

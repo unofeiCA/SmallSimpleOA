@@ -57,7 +57,7 @@
                     else
                     {
                         <a class="nav-link active text-white" asp-controller="Home" asp-action="Home">Home</a>
-                        <a class="nav-link text-white" asp-controller="Message" asp-action="Message">Message</a>
+                        <a class="nav-link text-white" asp-controller="Message" asp-action="Message">Message &nbsp;&nbsp;<span id="unreadMsgBadge"></span></a>
                         <a class="nav-link text-white" asp-controller="Attendance" asp-action="Attendance">Attendance</a>
                         <a class="nav-link text-white" asp-controller="Todo" asp-action="List">Todo</a>
                         <a class="nav-link text-white" asp-controller="AskForLeave" asp-action="List">Leave Request</a>
@@ -185,9 +185,69 @@
                 window.location.href = "@Url.Action("Message", "Message")" + "?u=" + uid;
             });
             $("#messagePop").fadeIn();
+
+            fetchUnread();
         };
 
         connection.on("ReceiveMessage", onMsgFunc);
+
+        function fetchUnread()
+        {
+            $.ajax({
+                type: "GET",
+                data: {},
+                url: "@Url.Action("FetchUnread", "Message")",
+                dataType: 'json',
+                success: function (response) {
+                    if (response == undefined || response.length <= 0){
+                        return;
+                    }
+                    let unread = 0;
+
+                    for (let k in response){
+                        unread += response[k];
+                    }
+
+                    if(unread > 0){
+                        $("#unreadMsgBadge").text(unread);
+                        $("#unreadMsgBadge").addClass("badge");
+                        $("#unreadMsgBadge").addClass("badge-light");
+                    }else{
+                        $("#unreadMsgBadge").text("");
+                        $("#unreadMsgBadge").removeClass("badge");
+                        $("#unreadMsgBadge").removeClass("badge-light")
+                    }
+
+                    @*if in message page, add unread badge for every staff*@
+                    @if (@Context.Request.Path.Equals("/Message/Message")){
+                        @:unreadMsg = response;
+                        @:$("#userList").children("a").each(function(){
+                            @:$(this).children("span").text("");
+                            @:$(this).children("span").removeClass("badge");
+                            @:$(this).children("span").removeClass("badge-primary");
+                            @:let u = $(this).attr("userId");
+                            @:for (let k in response){
+                                @:if (k == u){
+                                    @:let v = response[k];
+                                    @:$(this).children("span").text(v);
+                                    @:$(this).children("span").addClass("badge");
+                                    @:$(this).children("span").addClass("badge-primary");
+                                @:}
+                            @:}
+                        @:});
+                    }
+
+
+                },
+                error: function (response) {
+                }
+            });
+        }
+
+
+        $(function(){
+            fetchUnread();
+        });
 
     </script>
 

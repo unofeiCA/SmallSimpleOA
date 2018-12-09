@@ -15,7 +15,10 @@ namespace SmallSimpleOA.Services
         public static AskForLeave FindAskForLeaveById(int id)
         {
             SmallSimpleOAContext ctx = new SmallSimpleOAContext();
-            return ctx.AskForLeave.Single(a => a.Id.Equals(id) && a.Valid == true);
+            AskForLeave ask = ctx.AskForLeave.Single(a => a.Id.Equals(id) && a.Valid == true);
+            ctx.Entry(ask).Reference(a => a.CurrentAt).Load();
+            ctx.Entry(ask).Reference(a => a.Applicant).Load();
+            return ask;
         }
 
         public static int FindCountByCurrentAt(Uzer u)

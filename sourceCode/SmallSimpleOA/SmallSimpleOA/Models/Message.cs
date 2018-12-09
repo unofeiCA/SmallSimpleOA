@@ -11,5 +11,7 @@ namespace SmallSimpleOA.Models
         public int? MsgTo { get; set; }
         public string Content { get; set; }
         public DateTime? MsgTime { get; set; }
+        public bool Readed { get; set; }
+
     }
 }

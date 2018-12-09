@@ -9,12 +9,29 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Newtonsoft.Json;
 
+
 namespace SmallSimpleOA.Controllers
 {
     public class MessageController : Controller
     {
-        private const int MSG_PAGE_SIZE = 20;
-        public IActionResult FetchMsg(string tId, string offset) 
+
+        public IActionResult FetchUnread() 
+        {
+
+            int? uid = HttpContext.Session.GetInt32("uid");
+            if (uid == null)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
+            Dictionary<int, int> unread = MessageService.FindCountUnreadedMessageByUser((int)uid);
+            string json = JsonConvert.SerializeObject(unread);
+
+            return Content(json);
+        }
+
+
+        public IActionResult FetchMsg(string tId, string offset, string size) 
         {
             
             int? uid = HttpContext.Session.GetInt32("uid");
@@ -28,19 +45,26 @@ namespace SmallSimpleOA.Controllers
                 return Content("");
             }
 
+            int amount;
+            if (!Int32.TryParse(size, out amount))
+            {
+                amount = 20;
+            }
+
             List<Message> msgs;
             int ost;
-            if (offset == null || !Int32.TryParse(offset, out ost))
+            if (offset == null || !Int32.TryParse(offset, out ost) || ost <= 0)
             {
-                msgs = MessageService.FindMessageByUserAndTargetAndAmount((int)uid, tid, MSG_PAGE_SIZE);
+                msgs = MessageService.FindMessageByUserAndTargetAndAmount((int)uid, tid, amount);
             }
             else
             {
-                msgs = MessageService.FindMessageByUserAndTargetAndOffsetAndAmount((int)uid, tid, ost, MSG_PAGE_SIZE);
+                msgs = MessageService.FindMessageByUserAndTargetAndOffsetAndAmount((int)uid, tid, ost, amount);
             }
 
-            string msgJson = JsonConvert.SerializeObject(msgs);
+            MessageService.UpdateMsgReaded(msgs);
 
+            string msgJson = JsonConvert.SerializeObject(msgs);
             return Content(msgJson);
         }
 

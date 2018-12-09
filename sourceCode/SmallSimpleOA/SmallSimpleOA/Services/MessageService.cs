@@ -10,6 +10,36 @@ namespace SmallSimpleOA.Services
         {
         }
 
+        public static Dictionary<int, int> FindCountUnreadedMessageByUser(int uid) 
+        {
+            Dictionary<int, int> res = new Dictionary<int, int>();
+            SmallSimpleOAContext ctx = new SmallSimpleOAContext();
+            List<Uzer> users = UserService.FindAllUser();
+            foreach (Uzer u in users)
+            {
+                int count = ctx.Message.Count(t => t.MsgTo.Equals(uid) && t.MsgFrom.Equals(u.Id) && t.Valid.Equals(true) && t.Readed.Equals(false));
+                if (count > 0)
+                {
+                    res.Add(u.Id, count);
+                }
+            }
+
+            return res;
+        }
+
+        public static void UpdateMsgReaded(List<Message> msgs) 
+        {
+            SmallSimpleOAContext ctx = new SmallSimpleOAContext();
+            foreach (Message m in msgs)
+            {
+                if (!m.Readed)
+                {
+                    ctx.Update(m);
+                    m.Readed = true;
+                    ctx.SaveChanges();
+                }
+            }
+        }
 
         public static List<Message> FindMessageByUserAndTargetAndAmount(int uid, int tid, int amount)
         {
@@ -38,6 +68,7 @@ namespace SmallSimpleOA.Services
             m.MsgTo = to;
             m.Content = content;
             m.MsgTime = time;
+            m.Readed = false;
 
             SmallSimpleOAContext ctx = new SmallSimpleOAContext();
             ctx.Add(m);

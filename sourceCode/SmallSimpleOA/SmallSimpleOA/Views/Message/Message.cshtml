@@ -8,9 +8,12 @@
 
 <div class="container row h-100 mh-100 pb-2">
     <div class="col-12 h-100">
-        <div class="row h-5 ">
-            <div class="col-12 h-100">
+        <div class="row h-5" >
+            <div class="col-3 h-100">
                 <h3 class="mb-0">Contacts</h3>
+            </div>
+            <div class="col-9 container">
+                <div id="loader" class="m-auto"></div> 
             </div>
         </div>
         <div class="row h-95 pt-3">
@@ -41,7 +44,7 @@
                                     continue;
                                 }
 
-                                <a href="#" userId="@user.Id" class="list-group-item list-group-item-action">@user.FirstName&nbsp;@user.LastName</a>
+                                <a href="#" userId="@user.Id" class="list-group-item list-group-item-action">@user.FirstName&nbsp;@user.LastName&nbsp;&nbsp;<span></span></a>
                                 
                             }
 
@@ -95,6 +98,8 @@
 
 @section Scripts{
 <script>
+        $("#loader").css("height", $("#loader").parent().height());
+        $("#loader").css("width",  $("#loader").parent().height());
         connection.off( "ReceiveMessage", onMsgFunc);
 
         connection.on("ReceiveMessage", function (uid, userName, message)
@@ -105,23 +110,35 @@
                 showMsg(message, 'from', 'tail');
             }else{
                 @*not current*@
-                @*todo*@
+                fetchUnread();
             }
 
         });
 
-        $("#messageBox").animate({ scrollTop: $("#messageBox").height() }, 1000);
 
-        $("#messageBox").delay(2000).scroll(function(){
-            if ($(this).scrollTop() < 20)
+        let disToTop = -1;
+        $("#messageBox").scroll(function(){
+
+            disToTop = $(this).scrollTop();
+        });
+
+        $("#messageBox").on("mousewheel", function(e){
+            if (disToTop != 0){ return; }
+            if (fetching == 1){ return; }
+            if(e.originalEvent.wheelDelta > 0)
             {
-                //alert('1');
+                fetching = 1;
+                fetchMsgHis(to, offset, 20);
             }
+            else
+            {
+            }
+
         });
 
         $("#sendBtn").click(function()
         {
-            if (to == 0){return;}
+            if (to == 0){$( "#msg").val(""); return;}
             let message = $("#msg").val();
             if (message.trim() == ""){
                 return;
@@ -132,6 +149,7 @@
             }).catch(function (err) {
                 return console.error(err.toString());
             });
+            $("#msg").val("");
         });
 
 
@@ -155,24 +173,86 @@
                 $("#messageBox").prepend(m);
             }else if (headTail == 'tail'){
                 $("#messageBox").append(m);
-                $("#messageBox").stop('msgBoxAniQue');
-                $("#messageBox").animate({ scrollTop: $("#messageBox").height() }, {duration : 1000, queue : 'msgBoxAniQue'}).dequeue('msgBoxAniQue');
+                $("#messageBox").animate({ scrollTop: $("#messageBox").prop("scrollHeight")});
+
             }else{
                 return;
             }
         }
 
-        function fetchMsgHis(uid, offset)
+        function fetchMsgHis(uid, ofsit, size)
         {
+            $("#loader").addClass("loader");
+            $.ajax({
+                type: "GET",
+                data: {tId : to, offset : ofsit, size: size},
+                url: "@Url.Action("FetchMsg", "Message")",
+                dataType: 'json',
+                success: function (response) {
+                    if (response == undefined || response.length <= 0){
+                        $("#loader").removeClass("loader");
+                        fetching = 0;
+                        return;
+                    }
+                    let last = response[response.length - 1];
+                    offset = last['Id'];
+                    for(let i = 0; i < response.length; i ++){
+                        let m = response[i];
+                        let msg = m['Content'];
+                        let tarId = m['MsgTo'];
+                        let fromTo;
+                        if (tarId == to){
+                            fromTo = 'to';
+                        }else{
+                            fromTo = 'from'
+                        }
 
+                        showMsg(msg, fromTo, 'head')
+                    }
+                    if (ofsit == 0){
+                        $("#messageBox").animate({ scrollTop: $("#messageBox").prop("scrollHeight")});
+                    }
+                    fetchUnread();
+                    fetching = 0;
+                    $("#loader").removeClass("loader");
+                },
+                error: function (response) {
+                    $("#loader").removeClass("loader");
+                    fetching = 0;
+                    alert('Something unexpected happened, please try it again later.');
+                }
+            });
         }
 
+        function init(){
+            $("#messageBox").empty();
+            offset = 0;
+            disToTop = -1;
+            fetching = 0;
+        }
+
+        let from = @Context.Session.GetInt32("uid");
+        let offset = 0;
         let to = 0;
+        let fetching = 0;
+        let unreadMsg = "";
         $("#userList").children("a").click(function(){
+            if (to == $(this).attr('userId')){return;}
+            init();
             $(this).parent().children().removeClass('active');
             $(this).addClass('active');
+            $(this).children("span").text("");
+            $(this).children("span").removeClass("badge");
+            $(this).children("span").removeClass("badge-primary");
             to = $(this).attr('userId');
-            fetchMsgHis(to);
+            let amount = 20;
+            for (let k in unreadMsg){
+                if(k == to){
+                    amount = unreadMsg[k];
+                }
+            }
+            fetching = 1;
+            fetchMsgHis(to, offset, amount);
         });
 
         @*if already have a target, chat to that target directly*@

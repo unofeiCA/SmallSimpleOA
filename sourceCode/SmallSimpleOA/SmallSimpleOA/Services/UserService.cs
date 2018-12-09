@@ -12,6 +12,12 @@ namespace SmallSimpleOA.Services
         {
         }
 
+        public static List<Uzer> FindAllUser()
+        {
+            return new SmallSimpleOAContext().Uzer.Where(e => e.Valid == true).ToList();
+
+        }
+
         public static List<Uzer> FindUserByDepartment(int depId)
         {
             return new SmallSimpleOAContext().Uzer.Where(e => e.Department == depId && e.Valid == true).ToList();

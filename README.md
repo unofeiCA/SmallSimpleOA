@@ -10,6 +10,8 @@ https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?vie
     Newtonsoft.Json      
     SignalR library is also needed. I developed this project on a Mac, so I install the library by command line. If you run it on Windows, you might need to install the library from NuGet.
 
+#Demo Video
+- Message: https://drive.google.com/open?id=12928T6rGuCqvULx3Paa3ooniMlvnpUnI
 
 ## Login/Logout:
 - You can login by email and password;

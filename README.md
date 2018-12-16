@@ -11,8 +11,12 @@ https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?vie
     SignalR library is also needed. I developed this project on a Mac, so I install the library by command line. If you run it on Windows, you might need to install the library from NuGet.
 
 # Demo Video
+- Add new user by admin account: https://drive.google.com/open?id=1ZfT6MVthMLkJWxWQyebn0M1k09843ZD7
 - Message: https://drive.google.com/open?id=1ZLR8yikKeHFx-8FYVgA4QQOxQZ6Ub9Xe
 - Attendance: https://drive.google.com/open?id=1qqGkBT7wus2e-M0vCtq9KwOLxWj3uID3
+- Leave request: https://drive.google.com/open?id=1FNP3R8Kq-7GImm1uESTXMyNR9B1hLIRA
+- Todo: https://drive.google.com/open?id=10fFga4J0iHYCnkjg2ID94mx3WGDqr92l
+
 ## Login/Logout:
 - You can login by email and password;
 - You can logout by the menu on the top-right corner.

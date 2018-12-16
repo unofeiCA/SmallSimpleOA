@@ -61,6 +61,13 @@ namespace SmallSimpleOA.Controllers
                 return RedirectToAction("New", "StaffManage", new { r = result });
             }
 
+            Uzer u = UserService.FindUserByEmail(email);
+            if (u != null)
+            {
+                result = "Duplicated user email. Try another email please.";
+                return RedirectToAction("New", "StaffManage", new { r = result });
+            }
+
             UserService.AddUser(email, password, firstName, lastName, dep, lev);
 
             return RedirectToAction("New", "StaffManage", new { r = result });

@@ -15,7 +15,7 @@ namespace SmallSimpleOA.Services
         public static TodoTask FindTodoTaskById(int id)
         {
             SmallSimpleOAContext ctx = new SmallSimpleOAContext();
-            return ctx.TodoTask.Single(t => t.Id.Equals(id) && t.Valid == true);
+            return ctx.TodoTask.FirstOrDefault(t => t.Id.Equals(id) && t.Valid == true);
 
         }
 

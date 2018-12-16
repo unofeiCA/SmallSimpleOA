@@ -14,7 +14,7 @@ namespace SmallSimpleOA.Services
         public static Department FindDepartmentByID(int departmentID)
         {
             SmallSimpleOAContext ctx = new SmallSimpleOAContext();
-            return ctx.Department.Single(d => d.Valid == true && d.Id == departmentID);
+            return ctx.Department.FirstOrDefault(d => d.Valid == true && d.Id == departmentID);
 
         }
 

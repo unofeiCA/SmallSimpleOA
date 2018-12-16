@@ -32,13 +32,13 @@ namespace SmallSimpleOA.Services
 
         public static Uzer FindUserByID(int uid)
         {
-            return new SmallSimpleOAContext().Uzer.Single(e => e.Id == uid && e.Valid == true);
+            return new SmallSimpleOAContext().Uzer.FirstOrDefault(e => e.Id == uid && e.Valid == true);
 
         }
 
         public static Uzer FindUserByEmail(string email)
         {
-            return new SmallSimpleOAContext().Uzer.Single(e => e.Email.Equals(email) && e.Valid == true);
+            return new SmallSimpleOAContext().Uzer.FirstOrDefault(e => e.Email.Equals(email) && e.Valid == true);
 
         }
         public static void UpdateUser(Uzer u)
@@ -73,7 +73,7 @@ namespace SmallSimpleOA.Services
             {
                 return null;
             }
-            Uzer supervisor = new SmallSimpleOAContext().Uzer.Single(s => s.Valid == true && s.Department == u.Department && s.UzerLevel == (u.UzerLevel + 1));
+            Uzer supervisor = new SmallSimpleOAContext().Uzer.FirstOrDefault(s => s.Valid == true && s.Department == u.Department && s.UzerLevel == (u.UzerLevel + 1));
             return supervisor;
         }
     }

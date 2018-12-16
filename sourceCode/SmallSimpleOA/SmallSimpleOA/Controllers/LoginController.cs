@@ -28,6 +28,12 @@ namespace SmallSimpleOA.Controllers
 
             Uzer user = UserService.FindUserByEmail(email);
 
+            if (user == null)
+            {
+                return RedirectToAction("Login", "Login", new { pwdNotCorrect = "1" });
+
+            }
+
             string hash = MD5Util.MD5Value(password + user.Salt);
             if (hash.Equals(user.Password))
             {
